@@ -13,7 +13,7 @@ const GET_POKEMON_INDEX = gql`
 
 type PokemonIndex = {
   name: string;
-  image: string;
+  imageUri: string;
 };
 
 const usePokemons = () => {
@@ -22,7 +22,7 @@ const usePokemons = () => {
     data?.pokemon_v2_pokemon.map((item: any) => {
       return {
         name: item.name,
-        image: item.pokemon_v2_pokemonsprites[0].sprites,
+        imageUri: item.pokemon_v2_pokemonsprites[0].sprites,
       };
     }) ?? [];
 

@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 
 type PokemonItemProps = {
-  image: string;
+  imageUri: string;
   shortName: string;
 };
 
-const PokemonItem = ({ image, shortName }: PokemonItemProps) => (
+const PokemonItem = ({ imageUri, shortName }: PokemonItemProps) => (
   <View style={styles.pokemonItem}>
     <View style={styles.image}>
       <Image
         style={styles.image}
         source={{
-          uri: image,
+          uri: imageUri,
         }}
       />
     </View>

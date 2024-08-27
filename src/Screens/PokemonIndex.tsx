@@ -14,7 +14,7 @@ const PokemonIndex = () => {
         numColumns={2}
         data={pokemonIndex}
         renderItem={({ item }) => (
-          <PokemonItem shortName={item.name} image={item.image} />
+          <PokemonItem shortName={item.name} imageUri={item.imageUri} />
         )}
         keyExtractor={(item) => item.name}
       />
