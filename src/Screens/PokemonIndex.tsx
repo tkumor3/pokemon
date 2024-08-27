@@ -1,18 +1,10 @@
-import usePokemons, { PokemonIndexResponse } from "@/hooks/usePokemons";
-import { InfiniteData } from "@tanstack/react-query";
+import usePokemons from "@/hooks/usePokemons";
 import React from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import PokemonItem from "../components/PokemonItem";
 
-const flatPokemonResults = (
-  data?: InfiniteData<PokemonIndexResponse, unknown>
-) => {
-  if (!data) return [];
-  return data?.pages.map((page) => page.results).flat();
-};
-
 const PokemonIndex = () => {
-  const { data, fetchNextPage } = usePokemons();
+  const { pokemonIndex } = usePokemons();
 
   return (
     <View style={styles.container}>
@@ -20,10 +12,11 @@ const PokemonIndex = () => {
         contentContainerStyle={{ gap: 8, marginHorizontal: 16 }}
         columnWrapperStyle={{ gap: 8 }}
         numColumns={2}
-        data={flatPokemonResults(data)}
-        renderItem={({ item }) => <PokemonItem shortName={item.name} />}
+        data={pokemonIndex}
+        renderItem={({ item }) => (
+          <PokemonItem shortName={item.name} image={item.image} />
+        )}
         keyExtractor={(item) => item.name}
-        onEndReached={() => fetchNextPage()}
       />
     </View>
   );

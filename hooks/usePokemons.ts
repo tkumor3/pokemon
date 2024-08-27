@@ -1,29 +1,35 @@
-import fetcher from "@/src/utils/fetcher";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { gql, useQuery } from "@apollo/client";
 
-const DEFAULT_URL = "https://pokeapi.co/api/v2/pokemon" as const;
+const GET_POKEMON_INDEX = gql`
+  query pokemons {
+    pokemon_v2_pokemon {
+      name
+      pokemon_v2_pokemonsprites {
+        sprites(path: "front_default")
+      }
+    }
+  }
+`;
 
-export type PokemonIndexResponse = {
-  counter: number;
-  next: string;
-  previous: string;
-  results: { url: string; name: string }[];
+type PokemonIndex = {
+  name: string;
+  image: string;
 };
 
-const fetchPokemons = async ({ pageParam }: { pageParam: string }) =>
-  fetcher<PokemonIndexResponse>(pageParam);
-
 const usePokemons = () => {
-  const { data, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["pokemons"],
-    queryFn: fetchPokemons,
-    initialPageParam: DEFAULT_URL,
-    getNextPageParam: (lastPage) => lastPage?.next,
-  });
+  const { loading, error, data } = useQuery(GET_POKEMON_INDEX);
+  const pokemonIndex: PokemonIndex[] =
+    data?.pokemon_v2_pokemon.map((item: any) => {
+      return {
+        name: item.name,
+        image: item.pokemon_v2_pokemonsprites[0].sprites,
+      };
+    }) ?? [];
 
   return {
-    data,
-    fetchNextPage,
+    pokemonIndex,
+    loading,
+    error,
   };
 };
 

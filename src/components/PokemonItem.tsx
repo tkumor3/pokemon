@@ -1,22 +1,25 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 
 type PokemonItemProps = {
-  url?: string; // Will be used later
+  image: string;
   shortName: string;
 };
 
-const PokemonItem = ({ url, shortName }: PokemonItemProps) => {
-  return (
-    <View style={styles.pokemonItem}>
-      <View style={styles.image}>
-        <Text>Image</Text>
-      </View>
-      <View style={styles.textContainer}>
-        <Text>{shortName}</Text>
-      </View>
+const PokemonItem = ({ image, shortName }: PokemonItemProps) => (
+  <View style={styles.pokemonItem}>
+    <View style={styles.image}>
+      <Image
+        style={styles.image}
+        source={{
+          uri: image,
+        }}
+      />
     </View>
-  );
-};
+    <View style={styles.textContainer}>
+      <Text>{shortName}</Text>
+    </View>
+  </View>
+);
 
 const styles = StyleSheet.create({
   pokemonItem: {
@@ -32,9 +35,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "red",
+    width: null,
+    height: null,
   },
   textContainer: {
     justifyContent: "center",
