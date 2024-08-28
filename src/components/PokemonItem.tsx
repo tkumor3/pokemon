@@ -24,15 +24,13 @@ const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
           ))}
         </View>
       </View>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          resizeMode="contain"
-          source={{
-            uri: imageUri,
-          }}
-        />
-      </View>
+      <Image
+        width={70}
+        height={70}
+        source={{
+          uri: imageUri,
+        }}
+      />
     </View>
   );
 };
@@ -44,22 +42,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: "#ffffff4f",
-    height: 100,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   tagsContainer: { flexDirection: "row", gap: 8 },
-  imageContainer: {
-    aspectRatio: 1,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    flex: 1,
-    width: "100%",
-    aspectRatio: 1,
-  },
 
   title: {
     color: "#fff",
