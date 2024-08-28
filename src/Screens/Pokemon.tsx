@@ -1,5 +1,4 @@
 import { View, Text } from "react-native";
-import type { PathConfigMap } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from ".";
 
@@ -13,8 +12,5 @@ const Pokemon = ({ route }: Props) => {
     </View>
   );
 };
-
-Pokemon.title = "Pokemon";
-Pokemon.options = {};
 
 export default Pokemon;
