@@ -1,46 +1,57 @@
 import { View, Text, StyleSheet, Image } from "react-native";
+import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
+import PokemonType from "./PokemonType";
 
 type PokemonItemProps = {
   imageUri: string;
   shortName: string;
+  types: PokemonTypes[];
 };
 
-const PokemonItem = ({ imageUri, shortName }: PokemonItemProps) => (
-  <View style={styles.pokemonItem}>
-    <View style={styles.image}>
+const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
+  return (
+    <View
+      style={[
+        { backgroundColor: POKEMON_TYPE_COLORS[types[0]] },
+        styles.pokemonItem,
+      ]}
+    >
+      <View style={{ gap: 8 }}>
+        <Text style={styles.title}>{shortName}</Text>
+        <View style={styles.tagsContainer}>
+          {types.map((type) => (
+            <PokemonType type={type} />
+          ))}
+        </View>
+      </View>
       <Image
-        style={styles.image}
+        width={70}
+        height={70}
         source={{
           uri: imageUri,
         }}
       />
     </View>
-    <View style={styles.textContainer}>
-      <Text>{shortName}</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   pokemonItem: {
     flex: 1,
-    aspectRatio: 1,
-    backgroundColor: "#fff",
     padding: 14,
-    margin: 5,
-    borderRadius: 8,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#ddd",
-    marginTop: 10,
+    borderColor: "#ffffff4f",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-  image: {
-    flex: 1,
-    width: null,
-    height: null,
-  },
-  textContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+  tagsContainer: { flexDirection: "row", gap: 8 },
+
+  title: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    textTransform: "capitalize",
   },
 });
 

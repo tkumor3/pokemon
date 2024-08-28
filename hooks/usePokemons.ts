@@ -1,3 +1,4 @@
+import { PokemonTypes } from "@/src/constants";
 import { gql, useQuery } from "@apollo/client";
 
 const GET_POKEMON_INDEX = gql`
@@ -5,7 +6,12 @@ const GET_POKEMON_INDEX = gql`
     pokemon_v2_pokemon {
       name
       pokemon_v2_pokemonsprites {
-        sprites(path: "front_default")
+        sprites(path: "other")
+      }
+      pokemon_v2_pokemontypes {
+        pokemon_v2_type {
+          name
+        }
       }
     }
   }
@@ -14,6 +20,7 @@ const GET_POKEMON_INDEX = gql`
 type PokemonIndex = {
   name: string;
   imageUri: string;
+  types: PokemonTypes[];
 };
 
 const usePokemons = () => {
@@ -22,7 +29,12 @@ const usePokemons = () => {
     data?.pokemon_v2_pokemon.map((item: any) => {
       return {
         name: item.name,
-        imageUri: item.pokemon_v2_pokemonsprites[0].sprites,
+        imageUri:
+          item.pokemon_v2_pokemonsprites[0].sprites["official-artwork"]
+            .front_default,
+        types: item.pokemon_v2_pokemontypes.map(
+          (item: any) => item.pokemon_v2_type.name
+        ),
       };
     }) ?? [];
 

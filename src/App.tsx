@@ -19,7 +19,11 @@ function App() {
     <ApolloProvider client={client}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Pokemon" component={PokemonIndex} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Pokemon"
+            component={PokemonIndex}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
