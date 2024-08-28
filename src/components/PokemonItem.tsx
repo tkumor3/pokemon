@@ -1,19 +1,36 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
+import PokemonType from "./PokemonType";
 
 type PokemonItemProps = {
-  url?: string; // Will be used later
+  imageUri: string;
   shortName: string;
+  types: PokemonTypes[];
 };
 
-const PokemonItem = ({ url, shortName }: PokemonItemProps) => {
+const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
   return (
-    <View style={styles.pokemonItem}>
-      <View style={styles.image}>
-        <Text>Image</Text>
+    <View
+      style={[
+        { backgroundColor: POKEMON_TYPE_COLORS[types[0]] },
+        styles.pokemonItem,
+      ]}
+    >
+      <View style={{ gap: 8 }}>
+        <Text style={styles.title}>{shortName}</Text>
+        <View style={styles.tagsContainer}>
+          {types.map((type) => (
+            <PokemonType type={type} />
+          ))}
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text>{shortName}</Text>
-      </View>
+      <Image
+        width={70}
+        height={70}
+        source={{
+          uri: imageUri,
+        }}
+      />
     </View>
   );
 };
@@ -21,24 +38,20 @@ const PokemonItem = ({ url, shortName }: PokemonItemProps) => {
 const styles = StyleSheet.create({
   pokemonItem: {
     flex: 1,
-    aspectRatio: 1,
-    backgroundColor: "#fff",
     padding: 14,
-    margin: 5,
-    borderRadius: 8,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#ddd",
-    marginTop: 10,
+    borderColor: "#ffffff4f",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "red",
-  },
-  textContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+  tagsContainer: { flexDirection: "row", gap: 8 },
+
+  title: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    textTransform: "capitalize",
   },
 });
 
