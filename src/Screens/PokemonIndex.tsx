@@ -32,6 +32,9 @@ const PokemonIndex = () => {
   );
 };
 
+PokemonIndex.title = "Home";
+PokemonIndex.options = { headerShown: false };
+
 const styles = StyleSheet.create({
   logoImage: { flex: 1, height: "100%" },
   logoContainer: {

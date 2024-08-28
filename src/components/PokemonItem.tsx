@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
 import PokemonType from "./PokemonType";
+import { useNavigation } from "@react-navigation/native";
 
 type PokemonItemProps = {
   imageUri: string;
@@ -9,8 +10,15 @@ type PokemonItemProps = {
 };
 
 const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    return navigation.navigate("Pokemon", { name: shortName });
+  };
+
   return (
-    <View
+    <TouchableOpacity
+      onPress={handlePress}
       style={[
         { backgroundColor: POKEMON_TYPE_COLORS[types[0]] },
         styles.pokemonItem,
@@ -31,7 +39,7 @@ const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
           uri: imageUri,
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
