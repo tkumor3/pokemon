@@ -10,13 +10,6 @@ const NoConnection = () => (
       alignItems: "center",
     }}
   >
-    <View style={{ height: 100 }}>
-      <Image
-        style={{ flex: 1, height: "100%" }}
-        resizeMode="contain"
-        source={require("assets/images/pokemon_logo.png")}
-      />
-    </View>
     <Text>No internet connection</Text>
   </SafeAreaView>
 );
