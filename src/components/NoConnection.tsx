@@ -14,7 +14,7 @@ const NoConnection = ({ children }: PropsWithChildren) => {
     return () => unsubscribe();
   }, []);
 
-  return hasConnection ? (
+  return !hasConnection ? (
     <SafeAreaView
       style={{
         flex: 1,
