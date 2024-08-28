@@ -4,9 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PokemonIndex from "./Screens/PokemonIndex";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { addEventListener } from "@react-native-community/netinfo";
+
 import NoConnection from "@components/NoConnection";
-import { useEffect, useState } from "react";
 
 const client = new ApolloClient({
   uri: "https://beta.pokeapi.co/graphql/v1beta",
@@ -16,31 +15,19 @@ const client = new ApolloClient({
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const [hasConnection, setHasConnection] = useState(true);
-  useEffect(() => {
-    const unsubscribe = addEventListener((state) => {
-      setHasConnection(state.isConnected ?? false);
-    });
-
-    // Unsubscribe
-    return () => unsubscribe();
-  }, []);
-
-  if (!hasConnection) {
-    return <NoConnection />;
-  }
-
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Pokemon"
-            component={PokemonIndex}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <NoConnection>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Pokemon"
+              component={PokemonIndex}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NoConnection>
     </ApolloProvider>
   );
 }
