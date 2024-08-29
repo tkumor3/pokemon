@@ -1,7 +1,7 @@
-import usePokemons from "@/hooks/usePokemons";
 import Error from "@components/Error";
 import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 import PokemonItem from "./PokemonItem";
+import usePokemons from "../hooks/usePokemons";
 
 const PokemonList = () => {
   const { pokemonIndex, loading, error } = usePokemons();
