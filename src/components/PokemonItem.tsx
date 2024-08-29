@@ -13,7 +13,7 @@ const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    return navigation.navigate("Pokemon", { name: shortName });
+    return navigation.navigate("Pokemon", { screen: "About" });
   };
 
   return (

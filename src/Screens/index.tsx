@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   PokemonIndex: undefined;
-  Pokemon: { name: string };
+  Pokemon: undefined;
 };
 
 declare global {
