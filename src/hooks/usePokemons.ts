@@ -1,8 +1,10 @@
 import { PokemonTypes } from "@/src/constants";
-import { gql, useQuery } from "@apollo/client";
-import { useState } from "react";
 
-const GET_POKEMON_INDEX = gql`
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { gql } from "../__generated__";
+
+const GET_POKEMON_INDEX = gql(`
   query pokemons($offset: Int, $limit: Int) {
     pokemon_v2_pokemon(limit: $limit, offset: $offset) {
       id
@@ -17,13 +19,7 @@ const GET_POKEMON_INDEX = gql`
       }
     }
   }
-`;
-
-type PokemonIndex = {
-  name: string;
-  imageUri: string;
-  types: PokemonTypes[];
-};
+`);
 
 const PAGINATION_LIMIT = 10;
 
@@ -37,16 +33,15 @@ const usePokemons = () => {
     },
   });
 
-  const pokemonIndex: PokemonIndex[] =
-    data?.pokemon_v2_pokemon.map((item: any) => {
+  const pokemonIndex =
+    data?.pokemon_v2_pokemon.map((item) => {
       return {
         name: item.name,
-        imageUri:
-          item.pokemon_v2_pokemonsprites[0].sprites["official-artwork"]
-            .front_default,
-        types: item.pokemon_v2_pokemontypes.map(
-          (item: any) => item.pokemon_v2_type.name
-        ),
+        imageUri: item.pokemon_v2_pokemonsprites[0].sprites["official-artwork"]
+          .front_default as string,
+        types: item.pokemon_v2_pokemontypes
+          ?.map((item) => item.pokemon_v2_type?.name)
+          .filter((item) => item) as PokemonTypes[],
       };
     }) ?? [];
 

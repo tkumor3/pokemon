@@ -1,4 +1,5 @@
 import React from "react";
+
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
 import PokemonList from "@components/PokemonList";
 
