@@ -28,7 +28,7 @@ type PokemonIndex = {
 const PAGINATION_LIMIT = 10;
 
 const usePokemons = () => {
-  const [loadingMore, setLoadMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [loadedAll, setLoadedAll] = useState(false);
   const { loading, error, data, fetchMore } = useQuery(GET_POKEMON_INDEX, {
     variables: {
@@ -54,7 +54,7 @@ const usePokemons = () => {
     if (loadedAll) {
       return;
     }
-    setLoadMore(true);
+    setLoadingMore(true);
     try {
       const result = await fetchMore({
         variables: {
@@ -66,7 +66,7 @@ const usePokemons = () => {
       }
       return result;
     } finally {
-      setLoadMore(false);
+      setLoadingMore(false);
     }
   };
 
