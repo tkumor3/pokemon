@@ -38,8 +38,8 @@ const client = new ApolloClient({
         fields: {
           pokemon_v2_pokemon: {
             keyArgs: false,
-            //TODO: remove any after merge generates types
-            merge(existing, incoming, { args: { offset = 0 } }: any) {
+            merge(existing, incoming, { args }) {
+              const { offset = 0 } = args ?? {};
               // Slicing is necessary because the existing data is
               // immutable, and frozen in development.
               const merged = existing ? existing.slice(0) : [];
