@@ -4,7 +4,8 @@ import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 import PokemonItem from "./PokemonItem";
 
 const PokemonList = () => {
-  const { pokemonIndex, loading, error } = usePokemons();
+  const { pokemonIndex, loading, error, fetchMore } = usePokemons();
+  console.log(error);
   if (error) {
     return <Error />;
   }
@@ -27,6 +28,14 @@ const PokemonList = () => {
           types={item.types}
         />
       )}
+      onEndReached={() => {
+        fetchMore({
+          variables: {
+            offset: pokemonIndex.length,
+          },
+        });
+      }}
+      onEndReachedThreshold={0.1}
       keyExtractor={(item) => item.name}
     />
   );

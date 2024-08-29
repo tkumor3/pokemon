@@ -2,8 +2,9 @@ import { PokemonTypes } from "@/src/constants";
 import { gql, useQuery } from "@apollo/client";
 
 const GET_POKEMON_INDEX = gql`
-  query pokemons {
-    pokemon_v2_pokemon {
+  query pokemons($offset: Int, $limit: Int) {
+    pokemon_v2_pokemon(limit: $limit, offset: $offset) {
+      id
       name
       pokemon_v2_pokemonsprites {
         sprites(path: "other")
@@ -23,8 +24,17 @@ type PokemonIndex = {
   types: PokemonTypes[];
 };
 
+const PAGINATION_LIMIT = 10;
+
 const usePokemons = () => {
-  const { loading, error, data } = useQuery(GET_POKEMON_INDEX);
+  const { loading, error, data, fetchMore } = useQuery(GET_POKEMON_INDEX, {
+    variables: {
+      offset: 0,
+      limit: PAGINATION_LIMIT,
+    },
+  });
+  console.log({ loading, error });
+
   const pokemonIndex: PokemonIndex[] =
     data?.pokemon_v2_pokemon.map((item: any) => {
       return {
@@ -40,6 +50,7 @@ const usePokemons = () => {
 
   return {
     pokemonIndex,
+    fetchMore,
     loading,
     error,
   };
