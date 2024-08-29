@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PokemonIndex from "./Screens/PokemonIndex";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import NoConnection from "@components/NoConnection";
 
@@ -17,7 +18,8 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <ApolloProvider client={client}>
-      <NoConnection>
+      <SafeAreaProvider>
+        <NoConnection />
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
@@ -27,7 +29,7 @@ function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </NoConnection>
+      </SafeAreaProvider>
     </ApolloProvider>
   );
 }
