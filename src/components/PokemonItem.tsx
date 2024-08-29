@@ -28,7 +28,7 @@ const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
         <Text style={styles.title}>{shortName}</Text>
         <View style={styles.tagsContainer}>
           {types.map((type) => (
-            <PokemonType type={type} />
+            <PokemonType key={type} type={type} />
           ))}
         </View>
       </View>

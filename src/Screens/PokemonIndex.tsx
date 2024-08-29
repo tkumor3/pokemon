@@ -1,11 +1,9 @@
-import usePokemons from "@/hooks/usePokemons";
 import React from "react";
-import { View, StyleSheet, FlatList, Image, SafeAreaView } from "react-native";
-import PokemonItem from "@components/PokemonItem";
+
+import { View, StyleSheet, Image, SafeAreaView } from "react-native";
+import PokemonList from "@components/PokemonList";
 
 const PokemonIndex = () => {
-  const { pokemonIndex } = usePokemons();
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -15,19 +13,7 @@ const PokemonIndex = () => {
           source={require("assets/images/pokemon_logo.png")}
         />
       </View>
-
-      <FlatList
-        contentContainerStyle={{ gap: 16, marginHorizontal: 16 }}
-        data={pokemonIndex}
-        renderItem={({ item }) => (
-          <PokemonItem
-            shortName={item.name}
-            imageUri={item.imageUri}
-            types={item.types}
-          />
-        )}
-        keyExtractor={(item) => item.name}
-      />
+      <PokemonList />
     </SafeAreaView>
   );
 };
