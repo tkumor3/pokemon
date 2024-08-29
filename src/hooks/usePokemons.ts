@@ -1,7 +1,7 @@
 import { PokemonTypes } from "@/src/constants";
 
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { gql } from "../__generated__";
 
 const GET_POKEMON_INDEX = gql(`
@@ -45,7 +45,7 @@ const usePokemons = () => {
       };
     }) ?? [];
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = useCallback(async () => {
     if (loadedAll) {
       return;
     }
@@ -60,10 +60,11 @@ const usePokemons = () => {
         setLoadedAll(true);
       }
       return result;
+    } catch (e) {
     } finally {
       setLoadingMore(false);
     }
-  };
+  }, [fetchMore, loadedAll, pokemonIndex.length]);
 
   return {
     loadingMore,

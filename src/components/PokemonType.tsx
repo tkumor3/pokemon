@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const PokemonType = ({ type }: { type: string }) => {
   return (
