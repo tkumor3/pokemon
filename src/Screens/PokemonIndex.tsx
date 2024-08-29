@@ -1,7 +1,7 @@
-import usePokemons from "@/hooks/usePokemons";
 import React from "react";
 import { View, StyleSheet, FlatList, Image, SafeAreaView } from "react-native";
 import PokemonItem from "@components/PokemonItem";
+import usePokemons from "../hooks/usePokemons";
 
 const PokemonIndex = () => {
   const { pokemonIndex } = usePokemons();
