@@ -1,10 +1,12 @@
 import Error from "@components/Error";
 import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 import PokemonItem from "./PokemonItem";
-import usePokemons from "../hooks/usePokemons";
+import usePokemons from "@/src/hooks/usePokemons";
 
 const PokemonList = () => {
-  const { pokemonIndex, loading, error } = usePokemons();
+  const { pokemonIndex, loading, error, fetchMore, loadingMore } =
+    usePokemons();
+
   if (error) {
     return <Error />;
   }
@@ -27,7 +29,10 @@ const PokemonList = () => {
           types={item.types}
         />
       )}
+      onEndReached={fetchMore}
+      onEndReachedThreshold={0.1}
       keyExtractor={(item) => item.name}
+      ListFooterComponent={loadingMore ? <ActivityIndicator /> : null}
     />
   );
 };

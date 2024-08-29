@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query pokemons {\n    pokemon_v2_pokemon {\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n": types.PokemonsDocument,
+    "\n  query pokemons($offset: Int, $limit: Int) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n": types.PokemonsDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query pokemons {\n    pokemon_v2_pokemon {\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query pokemons {\n    pokemon_v2_pokemon {\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query pokemons($offset: Int, $limit: Int) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query pokemons($offset: Int, $limit: Int) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
