@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   Pressable,
   ActivityIndicator,
 } from "react-native";
@@ -11,6 +10,7 @@ import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
 import LikeButton from "@components/LikeButton";
 import { SearchScreenProps } from "./types";
+import RotatingImage from "@components/RotatingImage";
 
 type Props = SearchScreenProps<"Pokemon">;
 
@@ -47,13 +47,7 @@ const Pokemon = ({ route, navigation }: Props) => {
           <LikeButton pokemonId={pokemon.id} />
         </View>
         <View style={styles.imageContainer}>
-          <Image
-            width={200}
-            height={200}
-            source={{
-              uri: pokemon.imageUri,
-            }}
-          />
+          <RotatingImage imageUri={pokemon.imageUri} />
         </View>
       </View>
       <View style={{ flex: 3, backgroundColor: "#fff", padding: 16 }}>

@@ -21,6 +21,7 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";
 import Search from "./Screens/Search";
 import Liked from "./Screens/Liked";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const link = from([
   new RetryLink({
@@ -55,25 +56,27 @@ const Tab = createBottomTabNavigator<RootTabParamsList>();
 function App() {
   return (
     <ApolloProvider client={client}>
-      <LikeContextProvider>
-        <SafeAreaProvider>
-          <NoConnection />
-          <NavigationContainer>
-            <Tab.Navigator>
-              <Tab.Screen
-                options={{ title: "Search", headerShown: false }}
-                name="Search"
-                component={Search}
-              />
-              <Tab.Screen
-                options={{ title: "Liked", headerShown: false }}
-                name="Liked"
-                component={Liked}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </LikeContextProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <LikeContextProvider>
+          <SafeAreaProvider>
+            <NoConnection />
+            <NavigationContainer>
+              <Tab.Navigator>
+                <Tab.Screen
+                  options={{ title: "Search", headerShown: false }}
+                  name="Search"
+                  component={Search}
+                />
+                <Tab.Screen
+                  options={{ title: "Liked", headerShown: false }}
+                  name="Liked"
+                  component={Liked}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </LikeContextProvider>
+      </GestureHandlerRootView>
     </ApolloProvider>
   );
 }
