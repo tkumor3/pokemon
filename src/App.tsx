@@ -17,6 +17,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RetryLink } from "@apollo/client/link/retry";
 
 import NoConnection from "@components/NoConnection";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const link = from([
   new RetryLink({
@@ -39,19 +40,7 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          pokemon_v2_pokemon: {
-            keyArgs: false,
-            merge(existing, incoming, { args }) {
-              const { offset = 0 } = args ?? {};
-              // Slicing is necessary because the existing data is
-              // immutable, and frozen in development.
-              const merged = existing ? existing.slice(0) : [];
-              for (let i = 0; i < incoming.length; ++i) {
-                merged[offset + i] = incoming[i];
-              }
-              return merged;
-            },
-          },
+          pokemon_v2_pokemon: offsetLimitPagination(["where"]),
         },
       },
     },
