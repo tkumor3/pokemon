@@ -1,20 +1,44 @@
-import { createContext, useCallback, useState, useContext } from "react";
+import {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
+import { getData, storeData } from "../utils";
 
-interface LikedContextType {
-  likedList: number[];
-
+interface LikeContextType {
+  likeList: number[];
   toggleLike: (id: number) => void;
   isLiked: (id?: number) => boolean;
 }
 
-const LikedContext = createContext<LikedContextType>({
-  likedList: [],
+const LikeContext = createContext<LikeContextType>({
+  likeList: [],
   toggleLike: () => {},
   isLiked: () => false,
 });
 
-const LikedContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [likedList, setLikedList] = useState<number[]>([]);
+const LikeContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const isFirstRender = useRef(true);
+  const [likeList, setLikedList] = useState<number[]>([]);
+  useEffect(() => {
+    (async () => {
+      const initialLikes = await getData<number[]>("likeList");
+      if (initialLikes) {
+        setLikedList(initialLikes);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    storeData("likeList", likeList);
+  }, [likeList]);
 
   const toggleLike = useCallback((id: number) => {
     setLikedList((prev) => {
@@ -28,25 +52,23 @@ const LikedContextProvider = ({ children }: { children: React.ReactNode }) => {
   const isLiked = useCallback(
     (id?: number) => {
       if (!id) return false;
-      return likedList.includes(id);
+      return likeList.includes(id);
     },
-    [likedList]
+    [likeList]
   );
 
   return (
-    <LikedContext.Provider value={{ likedList, toggleLike, isLiked }}>
+    <LikeContext.Provider value={{ likeList, toggleLike, isLiked }}>
       {children}
-    </LikedContext.Provider>
+    </LikeContext.Provider>
   );
 };
 const useLikeContext = () => {
-  const context = useContext(LikedContext);
+  const context = useContext(LikeContext);
   if (!context) {
-    throw new Error(
-      "useLikedContext must be used within a LikedContextProvider"
-    );
+    throw new Error("useLikeContext must be used within a LikeContext");
   }
   return context;
 };
 
-export { LikedContextProvider, useLikeContext };
+export { LikeContextProvider, useLikeContext };
