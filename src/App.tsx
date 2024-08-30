@@ -18,7 +18,7 @@ import { RetryLink } from "@apollo/client/link/retry";
 
 import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
-import { LikedContextProvider } from "./contexts/LikedContext";
+import { LikeContextProvider } from "./contexts/LikedContext";
 
 const link = from([
   new RetryLink({
@@ -53,7 +53,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   return (
     <ApolloProvider client={client}>
-      <LikedContextProvider>
+      <LikeContextProvider>
         <SafeAreaProvider>
           <NoConnection />
           <NavigationContainer>
@@ -71,7 +71,7 @@ function App() {
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
-      </LikedContextProvider>
+      </LikeContextProvider>
     </ApolloProvider>
   );
 }
