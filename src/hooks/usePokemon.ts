@@ -35,6 +35,7 @@ const parsePokemon = (pokemon?: Pokemon) => {
   if (!pokemon) return {};
 
   return {
+    id: pokemon.id,
     name: pokemon.name,
     imageUri: pokemon.pokemon_v2_pokemonsprites[0].sprites["official-artwork"]
       .front_default as string,

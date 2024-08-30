@@ -11,11 +11,13 @@ import { RootStackParamList } from "./types";
 import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
+import { useLikeContext } from "../contexts/LikedContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
 const Pokemon = ({ route, navigation }: Props) => {
   const { name } = route.params;
+  const { isLiked, toggleLike } = useLikeContext();
   const { pokemon, loading, error } = usePokemon(name);
   const defaultType = pokemon?.types?.[0];
 
@@ -23,10 +25,11 @@ const Pokemon = ({ route, navigation }: Props) => {
     return <ActivityIndicator />;
   }
 
-  if (error) {
+  if (error || !pokemon) {
     return <Error />;
   }
 
+  const isPokemonLiked = isLiked(pokemon.id);
   return (
     <View style={styles.container}>
       <View
@@ -41,7 +44,16 @@ const Pokemon = ({ route, navigation }: Props) => {
           },
         ]}
       >
-        <Text style={styles.title}>{name}</Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={styles.title}>{name}</Text>
+          <Pressable onPress={() => pokemon.id && toggleLike(pokemon.id)}>
+            {isPokemonLiked ? (
+              <Text style={{ color: "#fff", fontSize: 24 }}>♥</Text>
+            ) : (
+              <Text style={{ color: "#fff", fontSize: 24 }}>♡</Text>
+            )}
+          </Pressable>
+        </View>
         <View style={styles.imageContainer}>
           <Image
             width={200}

@@ -36,6 +36,7 @@ const usePokemons = () => {
   const pokemonIndex =
     data?.pokemon_v2_pokemon.map((item) => {
       return {
+        id: item.id,
         name: item.name,
         imageUri: item.pokemon_v2_pokemonsprites[0].sprites["official-artwork"]
           .front_default as string,
