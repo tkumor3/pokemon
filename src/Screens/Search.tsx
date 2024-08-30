@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./types";
+import { SearchStackParamList } from "./types";
 import PokemonIndex from "./PokemonIndex";
 import Pokemon from "./Pokemon";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<SearchStackParamList>();
 
 const Search = () => {
   return (

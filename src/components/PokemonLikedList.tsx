@@ -7,11 +7,10 @@ const PokemonLikedList = () => {
   const { pokemonIndex, loading, error, fetchMore, loadingMore } =
     useLikedPokemons();
 
-  console.log(pokemonIndex);
-
   if (error) {
     return <Error />;
   }
+
   if (loading) {
     return (
       <View style={styles.loader}>

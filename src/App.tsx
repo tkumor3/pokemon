@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import PokemonIndex from "./Screens/PokemonIndex";
 import Pokemon from "./Screens/Pokemon";
-import { RootStackParamList } from "./Screens/types";
+import { RootStackParamList, RootTabParamsList } from "./Screens/types";
 
 import {
   ApolloClient,
@@ -50,7 +50,7 @@ const client = new ApolloClient({
   }),
 });
 
-const Tab = createBottomTabNavigator<any>();
+const Tab = createBottomTabNavigator<RootTabParamsList>();
 
 function App() {
   return (
