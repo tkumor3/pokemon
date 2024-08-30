@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { addEventListener } from "@react-native-community/netinfo";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { POKEMON_TYPE_COLORS } from "../constants";
 
 const NoConnection = () => {
