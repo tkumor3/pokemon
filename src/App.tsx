@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PokemonIndex from "./Screens/PokemonIndex";
 import Pokemon from "./Screens/Pokemon";
-import { RootStackParamList } from "./Screens";
+import { RootStackParamList } from "./Screens/types";
 
 import {
   ApolloClient,
