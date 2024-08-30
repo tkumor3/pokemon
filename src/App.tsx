@@ -1,7 +1,7 @@
 // In App.js in a new project
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import PokemonIndex from "./Screens/PokemonIndex";
 import Pokemon from "./Screens/Pokemon";
 import { RootStackParamList } from "./Screens/types";
@@ -19,6 +19,8 @@ import { RetryLink } from "@apollo/client/link/retry";
 import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";
+import Search from "./Screens/Search";
+import Liked from "./Screens/Liked";
 
 const link = from([
   new RetryLink({
@@ -48,7 +50,7 @@ const client = new ApolloClient({
   }),
 });
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<any>();
 
 function App() {
   return (
@@ -57,18 +59,18 @@ function App() {
         <SafeAreaProvider>
           <NoConnection />
           <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen
-                options={{ title: "Pokemon", headerShown: false }}
-                name="PokemonIndex"
-                component={PokemonIndex}
+            <Tab.Navigator>
+              <Tab.Screen
+                options={{ title: "Search", headerShown: false }}
+                name="Search"
+                component={Search}
               />
-              <Stack.Screen
-                name="Pokemon"
-                component={Pokemon}
-                options={{ title: "Pokemon" }}
+              <Tab.Screen
+                options={{ title: "Liked", headerShown: false }}
+                name="Liked"
+                component={Liked}
               />
-            </Stack.Navigator>
+            </Tab.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
       </LikeContextProvider>

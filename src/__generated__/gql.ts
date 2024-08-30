@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query liked_pokemons($offset: Int, $limit: Int, $ids: [Int!]) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: {id: {_in: $ids}}) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n": types.Liked_PokemonsDocument,
     "\n  query pokemon($name: String) {\n    pokemon_v2_pokemon(where: {name: {_eq: $name}}) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n      pokemon_v2_pokemonspecy {\n        pokemon_v2_evolutionchain {\n          pokemon_v2_pokemonspecies {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n": types.PokemonDocument,
     "\n  query pokemons($offset: Int, $limit: Int) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n": types.PokemonsDocument,
 };
@@ -31,6 +32,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query liked_pokemons($offset: Int, $limit: Int, $ids: [Int!]) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: {id: {_in: $ids}}) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query liked_pokemons($offset: Int, $limit: Int, $ids: [Int!]) {\n    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: {id: {_in: $ids}}) {\n      id\n      name\n      pokemon_v2_pokemonsprites {\n        sprites(path: \"other\")\n      }\n      pokemon_v2_pokemontypes {\n        pokemon_v2_type {\n          name\n        }\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
