@@ -1,27 +1,23 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
 import PokemonType from "./PokemonType";
-import { useNavigation } from "@react-navigation/native";
 
 type PokemonItemProps = {
   imageUri: string;
   shortName: string;
   types: PokemonTypes[];
+  handlePress: (name: string) => void;
 };
 
-const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
-  const navigation = useNavigation();
-
-  const handlePress = () => {
-    return navigation.navigate("Search", {
-      screen: "Pokemon",
-      params: { name: shortName },
-    });
-  };
-
+const PokemonItem = ({
+  imageUri,
+  shortName,
+  types,
+  handlePress,
+}: PokemonItemProps) => {
   return (
     <Pressable
-      onPress={handlePress}
+      onPress={() => handlePress(shortName)}
       style={[
         { backgroundColor: POKEMON_TYPE_COLORS[types[0]] },
         styles.pokemonItem,

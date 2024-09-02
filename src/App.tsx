@@ -2,9 +2,8 @@
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PokemonIndex from "./Screens/PokemonIndex";
-import Pokemon from "./Screens/Pokemon";
-import { RootStackParamList, RootTabParamsList } from "./Screens/types";
+
+import { RootTabParamsList } from "./Screens/types";
 
 import {
   ApolloClient,

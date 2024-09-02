@@ -10,9 +10,9 @@ import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
 import LikeButton from "@components/LikeButton";
-import { SearchScreenProps } from "./types";
+import { LikeScreenProps, SearchScreenProps } from "./types";
 
-type Props = SearchScreenProps<"Pokemon">;
+type Props = SearchScreenProps<"Pokemon"> | LikeScreenProps<"Pokemon">;
 
 const Pokemon = ({ route, navigation }: Props) => {
   const { name } = route.params;
@@ -36,13 +36,11 @@ const Pokemon = ({ route, navigation }: Props) => {
             backgroundColor: defaultType
               ? POKEMON_TYPE_COLORS[defaultType]
               : "#fff",
-            flex: 2,
-            padding: 16,
-            justifyContent: "space-between",
           },
+          styles.topContainer,
         ]}
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={styles.header}>
           <Text style={styles.title}>{name}</Text>
           <LikeButton pokemonId={pokemon.id} />
         </View>
@@ -56,9 +54,9 @@ const Pokemon = ({ route, navigation }: Props) => {
           />
         </View>
       </View>
-      <View style={{ flex: 3, backgroundColor: "#fff", padding: 16 }}>
+      <View style={styles.bottomContainer}>
         <View style={{ gap: 8 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Evolutions:</Text>
+          <Text style={styles.boldText}>Evolutions:</Text>
           {pokemon.evolutions
             ?.filter((evolution) => evolution.name !== pokemon.name)
             .map((evolution) => (
@@ -69,7 +67,7 @@ const Pokemon = ({ route, navigation }: Props) => {
                 }}
                 key={evolution.id}
               >
-                <Text style={{ textTransform: "capitalize", fontSize: 16 }}>
+                <Text style={styles.regularCapitalizeText}>
                   {evolution.name}
                 </Text>
               </Pressable>
@@ -80,6 +78,15 @@ const Pokemon = ({ route, navigation }: Props) => {
   );
 };
 const styles = StyleSheet.create({
+  topContainer: {
+    flex: 2,
+    padding: 16,
+    justifyContent: "space-between",
+  },
+  boldText: { fontSize: 18, fontWeight: "bold" },
+  regularCapitalizeText: { fontSize: 16 },
+  header: { flexDirection: "row", justifyContent: "space-between" },
+  bottomContainer: { flex: 3, backgroundColor: "#fff", padding: 16 },
   container: { flex: 1 },
   pressable: {
     paddingVertical: 12,

@@ -2,8 +2,22 @@ import React from "react";
 
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
 import PokemonList from "@components/PokemonList";
+import usePokemons from "../hooks/usePokemons";
+import { SearchScreenProps } from "./types";
 
-const PokemonIndex = () => {
+type Props = SearchScreenProps<"PokemonIndex">;
+
+const PokemonIndex = ({ navigation }: Props) => {
+  const { pokemonIndex, loading, error, fetchMore, loadingMore } =
+    usePokemons();
+
+  const handlePress = (name: string) => {
+    return navigation.navigate("Search", {
+      screen: "Pokemon",
+      params: { name },
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -13,7 +27,14 @@ const PokemonIndex = () => {
           source={require("assets/images/pokemon_logo.png")}
         />
       </View>
-      <PokemonList />
+      <PokemonList
+        pokemons={pokemonIndex}
+        loading={loading}
+        error={error}
+        fetchMore={fetchMore}
+        loadingMore={loadingMore}
+        handlePress={handlePress}
+      />
     </SafeAreaView>
   );
 };
