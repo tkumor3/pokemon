@@ -1,3 +1,3 @@
-import usePokemons from "./hooks/usePokemons";
+import { parsePokemon } from "./hooks/utils";
 
-export type PokemonList = ReturnType<typeof usePokemons>["pokemonIndex"];
+export type Pokemon = ReturnType<typeof parsePokemon>;

@@ -3,6 +3,7 @@ import PokemonList from "@components/PokemonList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useLikedPokemons from "../hooks/useLikedPokemons";
 import { TabScreenProps } from "./types";
+import { StyleSheet } from "react-native";
 
 type Props = TabScreenProps<"Liked">;
 
@@ -15,7 +16,7 @@ const Liked = ({ navigation }: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <PokemonList
         pokemons={pokemonIndex}
         loading={loading}
@@ -27,4 +28,8 @@ const Liked = ({ navigation }: Props) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+});
 export default Liked;

@@ -1,11 +1,11 @@
 import Error from "@components/Error";
 import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 import PokemonItem from "./PokemonItem";
-import { PokemonList } from "../types";
 import { ApolloError } from "@apollo/client";
+import { Pokemon } from "../types";
 
 type Props = {
-  pokemons: PokemonList;
+  pokemons: Pokemon[];
   loading: boolean;
   error?: ApolloError;
   fetchMore: () => void;

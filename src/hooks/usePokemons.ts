@@ -3,6 +3,7 @@ import { PokemonTypes } from "@/src/constants";
 import { useQuery } from "@apollo/client";
 import { useCallback, useState } from "react";
 import { gql } from "../__generated__";
+import { parsePokemon } from "./utils";
 
 const GET_POKEMON_INDEX = gql(`
   query pokemons($offset: Int, $limit: Int) {
@@ -35,15 +36,7 @@ const usePokemons = () => {
 
   const pokemonIndex =
     data?.pokemon_v2_pokemon.map((item) => {
-      return {
-        id: item.id,
-        name: item.name,
-        imageUri: item.pokemon_v2_pokemonsprites[0].sprites["official-artwork"]
-          .front_default as string,
-        types: item.pokemon_v2_pokemontypes
-          ?.map((item) => item.pokemon_v2_type?.name)
-          .filter((item) => item) as PokemonTypes[],
-      };
+      return parsePokemon(item);
     }) ?? [];
 
   const handleLoadMore = useCallback(async () => {
