@@ -11,7 +11,6 @@ import { RootStackParamList } from "./types";
 import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
-import { useLikeContext } from "../contexts/LikedContext";
 import LikeButton from "@components/LikeButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
@@ -44,7 +43,7 @@ const Pokemon = ({ route, navigation }: Props) => {
           },
         ]}
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={styles.topContainer}>
           <Text style={styles.title}>{name}</Text>
           <LikeButton pokemonId={pokemon.id} />
         </View>
@@ -100,6 +99,10 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  topContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 

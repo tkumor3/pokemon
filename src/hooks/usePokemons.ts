@@ -61,7 +61,7 @@ const usePokemons = () => {
         setLoadedAll(true);
       }
       return result;
-    } catch (e) {
+    } catch {
     } finally {
       setLoadingMore(false);
     }
