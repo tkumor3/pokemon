@@ -10,7 +10,7 @@ type Props = {
   error?: ApolloError;
   fetchMore: () => void;
   loadingMore: boolean;
-  handlePress: (name: string) => void;
+  navigateToPokemon: (name: string) => void;
 };
 
 const PokemonLikedList = ({
@@ -19,7 +19,7 @@ const PokemonLikedList = ({
   error,
   fetchMore,
   loadingMore,
-  handlePress,
+  navigateToPokemon,
 }: Props) => {
   if (error) {
     return <Error />;
@@ -39,7 +39,7 @@ const PokemonLikedList = ({
       data={pokemons}
       renderItem={({ item }) => (
         <PokemonItem
-          handlePress={handlePress}
+          navigateToPokemon={navigateToPokemon}
           shortName={item.name}
           imageUri={item.imageUri}
           types={item.types}

@@ -6,12 +6,12 @@ import {
 import type { StackScreenProps } from "@react-navigation/stack";
 
 export type TabStackParamList = {
-  Search: undefined;
+  All: undefined;
   Liked: undefined;
 };
 
 export type RootStackParamList = {
-  Tab: NavigatorScreenParams<TabStackParamList>;
+  PokemonListTab: NavigatorScreenParams<TabStackParamList>;
   Pokemon: { name: string };
 };
 

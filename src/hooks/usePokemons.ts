@@ -1,9 +1,7 @@
-import { PokemonTypes } from "@/src/constants";
-
 import { useQuery } from "@apollo/client";
-import { useCallback, useState } from "react";
 import { gql } from "../__generated__";
 import { parsePokemon } from "./utils";
+import useFetchMorePokemon, { PAGINATION_LIMIT } from "./useFetchMorePokemon";
 
 const GET_POKEMON_INDEX = gql(`
   query pokemons($offset: Int, $limit: Int) {
@@ -22,11 +20,7 @@ const GET_POKEMON_INDEX = gql(`
   }
 `);
 
-const PAGINATION_LIMIT = 10;
-
 const usePokemons = () => {
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [loadedAll, setLoadedAll] = useState(false);
   const { loading, error, data, fetchMore } = useQuery(GET_POKEMON_INDEX, {
     variables: {
       offset: 0,
@@ -34,31 +28,12 @@ const usePokemons = () => {
     },
   });
 
-  const pokemonIndex =
-    data?.pokemon_v2_pokemon.map((item) => {
-      return parsePokemon(item);
-    }) ?? [];
+  const pokemonIndex = data?.pokemon_v2_pokemon.map(parsePokemon) ?? [];
 
-  const handleLoadMore = useCallback(async () => {
-    if (loadedAll) {
-      return;
-    }
-    setLoadingMore(true);
-    try {
-      const result = await fetchMore({
-        variables: {
-          offset: pokemonIndex.length,
-        },
-      });
-      if (result.data.pokemon_v2_pokemon.length < PAGINATION_LIMIT) {
-        setLoadedAll(true);
-      }
-      return result;
-    } catch (e) {
-    } finally {
-      setLoadingMore(false);
-    }
-  }, [fetchMore, loadedAll, pokemonIndex.length]);
+  const { loadingMore, fetchMore: handleLoadMore } = useFetchMorePokemon(
+    fetchMore,
+    pokemonIndex.length
+  );
 
   return {
     loadingMore,

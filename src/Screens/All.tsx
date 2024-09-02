@@ -5,13 +5,13 @@ import PokemonList from "@components/PokemonList";
 import usePokemons from "../hooks/usePokemons";
 import { TabScreenProps } from "./types";
 
-type Props = TabScreenProps<"Search">;
+type Props = TabScreenProps<"All">;
 
-const Search = ({ navigation }: Props) => {
+const All = ({ navigation }: Props) => {
   const { pokemonIndex, loading, error, fetchMore, loadingMore } =
     usePokemons();
 
-  const handlePress = (name: string) => {
+  const navigateToPokemon = (name: string) => {
     return navigation.navigate("Pokemon", { name });
   };
 
@@ -30,7 +30,7 @@ const Search = ({ navigation }: Props) => {
         error={error}
         fetchMore={fetchMore}
         loadingMore={loadingMore}
-        handlePress={handlePress}
+        navigateToPokemon={navigateToPokemon}
       />
     </SafeAreaView>
   );
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Search;
+export default All;

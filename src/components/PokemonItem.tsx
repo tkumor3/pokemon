@@ -6,18 +6,18 @@ type PokemonItemProps = {
   imageUri: string;
   shortName: string;
   types: PokemonTypes[];
-  handlePress: (name: string) => void;
+  navigateToPokemon: (name: string) => void;
 };
 
 const PokemonItem = ({
   imageUri,
   shortName,
   types,
-  handlePress,
+  navigateToPokemon,
 }: PokemonItemProps) => {
   return (
     <Pressable
-      onPress={() => handlePress(shortName)}
+      onPress={() => navigateToPokemon(shortName)}
       style={[
         { backgroundColor: POKEMON_TYPE_COLORS[types[0]] },
         styles.pokemonItem,
