@@ -7,7 +7,7 @@ import { TabScreenProps } from "./types";
 
 type Props = TabScreenProps<"Search">;
 
-const PokemonIndex = ({ navigation }: Props) => {
+const Search = ({ navigation }: Props) => {
   const { pokemonIndex, loading, error, fetchMore, loadingMore } =
     usePokemons();
 
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PokemonIndex;
+export default Search;

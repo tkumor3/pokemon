@@ -2,15 +2,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Liked from "./Liked";
 import { TabStackParamList } from "./types";
-import PokemonIndex from "./PokemonIndex";
+import Search from "./Search";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
-const TabScreen = () => (
+const PokemonListTab = () => (
   <Tab.Navigator initialRouteName="Search">
     <Tab.Screen
       name="Search"
-      component={PokemonIndex}
+      component={Search}
       options={{ headerShown: false }}
     />
     <Tab.Screen
@@ -20,4 +20,4 @@ const TabScreen = () => (
     />
   </Tab.Navigator>
 );
-export default TabScreen;
+export default PokemonListTab;

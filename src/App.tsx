@@ -15,7 +15,7 @@ import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";
 import Pokemon from "./Screens/Pokemon";
-import Tab from "./Screens/Tab";
+import PokemonListTab from "./Screens/PokemonListTab";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getHeaderTitle } from "./Screens/utils";
 
@@ -56,14 +56,14 @@ function App() {
         <SafeAreaProvider>
           <NoConnection />
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Tab">
+            <Stack.Navigator initialRouteName="PokemonListTab">
               <Stack.Screen
                 options={({ route }) => ({
                   headerShown: false,
                   headerTitle: getHeaderTitle(route),
                 })}
-                name="Tab"
-                component={Tab}
+                name="PokemonListTab"
+                component={PokemonListTab}
               />
               <Stack.Screen
                 name="Pokemon"
