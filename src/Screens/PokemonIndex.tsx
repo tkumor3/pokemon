@@ -3,19 +3,16 @@ import React from "react";
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
 import PokemonList from "@components/PokemonList";
 import usePokemons from "../hooks/usePokemons";
-import { SearchScreenProps } from "./types";
+import { TabScreenProps } from "./types";
 
-type Props = SearchScreenProps<"PokemonIndex">;
+type Props = TabScreenProps<"Search">;
 
 const PokemonIndex = ({ navigation }: Props) => {
   const { pokemonIndex, loading, error, fetchMore, loadingMore } =
     usePokemons();
 
   const handlePress = (name: string) => {
-    return navigation.navigate("Search", {
-      screen: "Pokemon",
-      params: { name },
-    });
+    return navigation.navigate("Pokemon", { name });
   };
 
   return (

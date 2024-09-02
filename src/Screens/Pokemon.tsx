@@ -10,9 +10,10 @@ import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
 import LikeButton from "@components/LikeButton";
-import { LikeScreenProps, SearchScreenProps } from "./types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "./types";
 
-type Props = SearchScreenProps<"Pokemon"> | LikeScreenProps<"Pokemon">;
+type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
 const Pokemon = ({ route, navigation }: Props) => {
   const { name } = route.params;

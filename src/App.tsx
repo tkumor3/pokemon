@@ -1,9 +1,8 @@
 // In App.js in a new project
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { RootTabParamsList } from "./Screens/types";
+import { RootStackParamList } from "./Screens/types";
 
 import {
   ApolloClient,
@@ -18,8 +17,9 @@ import { RetryLink } from "@apollo/client/link/retry";
 import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";
-import Search from "./Screens/Search";
-import Liked from "./Screens/Liked";
+import Pokemon from "./Screens/Pokemon";
+import Tab from "./Screens/Tab";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const link = from([
   new RetryLink({
@@ -49,7 +49,7 @@ const client = new ApolloClient({
   }),
 });
 
-const Tab = createBottomTabNavigator<RootTabParamsList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (
@@ -58,18 +58,18 @@ function App() {
         <SafeAreaProvider>
           <NoConnection />
           <NavigationContainer>
-            <Tab.Navigator>
-              <Tab.Screen
-                options={{ title: "Search", headerShown: false }}
-                name="Search"
-                component={Search}
+            <Stack.Navigator>
+              <Stack.Screen
+                options={{ title: "Pokemon", headerShown: false }}
+                name="Tab"
+                component={Tab}
               />
-              <Tab.Screen
-                options={{ title: "Liked", headerShown: false }}
-                name="Liked"
-                component={Liked}
+              <Stack.Screen
+                name="Pokemon"
+                component={Pokemon}
+                options={{ title: "Pokemon" }}
               />
-            </Tab.Navigator>
+            </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
       </LikeContextProvider>
