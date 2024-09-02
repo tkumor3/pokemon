@@ -1,9 +1,9 @@
-import { PokemonQuery } from "../__generated__/graphql";
+import { PokemonQuery } from "../../__generated__/graphql";
 import { PokemonTypes } from "@/src/constants";
 
 type Pokemon = PokemonQuery["pokemon_v2_pokemon"][number];
 
-export const parsePokemon = (pokemon: Pokemon) => {
+const parsePokemon = (pokemon: Pokemon) => {
   return {
     id: pokemon.id,
     name: pokemon.name,
@@ -17,3 +17,5 @@ export const parsePokemon = (pokemon: Pokemon) => {
         ?.pokemon_v2_pokemonspecies,
   };
 };
+
+export default parsePokemon;

@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "../__generated__";
-import { PokemonQuery } from "../__generated__/graphql";
-import { parsePokemon } from "./utils";
+import parsePokemon from "./utils/parsePokemon";
 
 const GET_POKEMON = gql(`
   query pokemon($name: String) {

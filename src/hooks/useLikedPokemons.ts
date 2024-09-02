@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "../__generated__";
 import { useLikeContext } from "../contexts/LikedContext";
-import { parsePokemon } from "./utils";
+import parsePokemon from "./utils/parsePokemon";
 import useFetchMorePokemon, { PAGINATION_LIMIT } from "./useFetchMorePokemon";
 
 const GET_POKEMON_INDEX = gql(`
