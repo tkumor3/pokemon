@@ -12,10 +12,5 @@ export const getHeaderTitle = (
   // In our case, it's "Search" as that's the first screen inside the navigator
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Search";
 
-  switch (routeName) {
-    case "Search":
-      return "Search";
-    case "Liked":
-      return "Liked";
-  }
+  return routeName;
 };
