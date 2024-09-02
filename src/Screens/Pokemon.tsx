@@ -11,11 +11,13 @@ import { RootStackParamList } from "./types";
 import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
+import LikeButton from "@components/LikeButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
 const Pokemon = ({ route, navigation }: Props) => {
   const { name } = route.params;
+
   const { pokemon, loading, error } = usePokemon(name);
   const defaultType = pokemon?.types?.[0];
 
@@ -23,7 +25,7 @@ const Pokemon = ({ route, navigation }: Props) => {
     return <ActivityIndicator />;
   }
 
-  if (error) {
+  if (error || !pokemon) {
     return <Error />;
   }
 
@@ -41,7 +43,10 @@ const Pokemon = ({ route, navigation }: Props) => {
           },
         ]}
       >
-        <Text style={styles.title}>{name}</Text>
+        <View style={styles.topContainer}>
+          <Text style={styles.title}>{name}</Text>
+          <LikeButton pokemonId={pokemon.id} />
+        </View>
         <View style={styles.imageContainer}>
           <Image
             width={200}
@@ -94,6 +99,10 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  topContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
