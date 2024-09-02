@@ -34,12 +34,10 @@ const LikeContextProvider = ({ children }: React.PropsWithChildren) => {
 
   const toggleLike = useCallback((id: number) => {
     setLikedList((prev) => {
-      if (prev.includes(id)) {
-        const nextLikeList = prev.filter((item) => item !== id);
-        storeData(LIKE_LIST_KEY, nextLikeList);
-        return nextLikeList;
-      }
-      const nextLikeList = [...prev, id];
+      const nextLikeList = prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id];
+
       storeData(LIKE_LIST_KEY, nextLikeList);
       return nextLikeList;
     });
