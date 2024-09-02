@@ -7,14 +7,14 @@ import PokemonIndex from "./PokemonIndex";
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabScreen = () => (
-  <Tab.Navigator>
+  <Tab.Navigator initialRouteName="Search">
     <Tab.Screen
-      options={{ title: "Search", headerShown: false }}
       name="Search"
       component={PokemonIndex}
+      options={{ headerShown: false }}
     />
     <Tab.Screen
-      options={{ title: "Liked", headerShown: false }}
+      options={{ headerShown: false }}
       name="Liked"
       component={Liked}
     />

@@ -56,7 +56,7 @@ function App() {
         <SafeAreaProvider>
           <NoConnection />
           <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="Tab">
               <Stack.Screen
                 options={({ route }) => ({
                   headerShown: false,
