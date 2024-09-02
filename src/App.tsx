@@ -1,9 +1,7 @@
 // In App.js in a new project
 
 import { NavigationContainer } from "@react-navigation/native";
-
 import { RootStackParamList } from "./Screens/types";
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,7 +11,6 @@ import {
 } from "@apollo/client";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RetryLink } from "@apollo/client/link/retry";
-
 import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";

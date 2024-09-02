@@ -23,7 +23,7 @@ const PokemonItem = ({
         styles.pokemonItem,
       ]}
     >
-      <View style={{ gap: 8 }}>
+      <View style={styles.gap}>
         <Text style={styles.title}>{shortName}</Text>
         <View style={styles.tagsContainer}>
           {types.map((type) => (
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   tagsContainer: { flexDirection: "row", gap: 8 },
-
+  gap: { gap: 8 },
   title: {
     color: "#fff",
     fontSize: 20,

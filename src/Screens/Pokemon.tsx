@@ -56,7 +56,7 @@ const Pokemon = ({ route, navigation }: Props) => {
         </View>
       </View>
       <View style={styles.bottomContainer}>
-        <View style={{ gap: 8 }}>
+        <View style={styles.gap}>
           <Text style={styles.boldText}>Evolutions:</Text>
           {pokemon.evolutions
             ?.filter((evolution) => evolution.name !== pokemon.name)
@@ -78,7 +78,9 @@ const Pokemon = ({ route, navigation }: Props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
+  gap: { gap: 8 },
   topContainer: {
     flex: 2,
     padding: 16,
