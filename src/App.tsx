@@ -3,6 +3,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PokemonIndex from "./Screens/PokemonIndex";
+import Pokemon from "./Screens/Pokemon";
+import { RootStackParamList } from "./Screens/types";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -14,6 +17,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RetryLink } from "@apollo/client/link/retry";
 
 import NoConnection from "@components/NoConnection";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const link = from([
   new RetryLink({
@@ -36,26 +40,14 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          pokemon_v2_pokemon: {
-            keyArgs: false,
-            merge(existing, incoming, { args }) {
-              const { offset = 0 } = args ?? {};
-              // Slicing is necessary because the existing data is
-              // immutable, and frozen in development.
-              const merged = existing ? existing.slice(0) : [];
-              for (let i = 0; i < incoming.length; ++i) {
-                merged[offset + i] = incoming[i];
-              }
-              return merged;
-            },
-          },
+          pokemon_v2_pokemon: offsetLimitPagination(["where"]),
         },
       },
     },
   }),
 });
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (
@@ -65,9 +57,14 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
-              options={{ headerShown: false }}
-              name="Pokemon"
+              options={{ title: "Pokemon", headerShown: false }}
+              name="PokemonIndex"
               component={PokemonIndex}
+            />
+            <Stack.Screen
+              name="Pokemon"
+              component={Pokemon}
+              options={{ title: "Pokemon" }}
             />
           </Stack.Navigator>
         </NavigationContainer>
