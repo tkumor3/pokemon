@@ -20,6 +20,7 @@ import { LikeContextProvider } from "./contexts/LikedContext";
 import Pokemon from "./Screens/Pokemon";
 import Tab from "./Screens/Tab";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { getHeaderTitle } from "./Screens/utils";
 
 const link = from([
   new RetryLink({
@@ -60,7 +61,10 @@ function App() {
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen
-                options={{ title: "Pokemon", headerShown: false }}
+                options={({ route }) => ({
+                  headerShown: false,
+                  headerTitle: getHeaderTitle(route),
+                })}
                 name="Tab"
                 component={Tab}
               />
