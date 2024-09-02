@@ -4,9 +4,10 @@ import {
   useState,
   useContext,
   useEffect,
-  useRef,
 } from "react";
-import { getData, storeData } from "../utils";
+import { getData, storeData } from "../utils/asyncStorage";
+
+const LIKE_LIST_KEY = "likeList" as const;
 
 interface LikeContextType {
   likeList: number[];
@@ -20,37 +21,32 @@ const LikeContext = createContext<LikeContextType>({
   isLiked: () => false,
 });
 
-const LikeContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const isFirstRender = useRef(true);
+const LikeContextProvider = ({ children }: React.PropsWithChildren) => {
   const [likeList, setLikedList] = useState<number[]>([]);
   useEffect(() => {
     (async () => {
-      const initialLikes = await getData<number[]>("likeList");
+      const initialLikes = await getData<number[]>(LIKE_LIST_KEY);
       if (initialLikes) {
         setLikedList(initialLikes);
       }
     })();
   }, []);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    storeData("likeList", likeList);
-  }, [likeList]);
-
   const toggleLike = useCallback((id: number) => {
     setLikedList((prev) => {
       if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
+        const nextLikeList = prev.filter((item) => item !== id);
+        storeData(LIKE_LIST_KEY, nextLikeList);
+        return nextLikeList;
       }
-      return [...prev, id];
+      const nextLikeList = [...prev, id];
+      storeData(LIKE_LIST_KEY, nextLikeList);
+      return nextLikeList;
     });
   }, []);
 
   const isLiked = useCallback(
-    (id?: number) => {
+    (id: number | undefined) => {
       if (!id) return false;
       return likeList.includes(id);
     },
