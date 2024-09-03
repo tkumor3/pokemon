@@ -49,6 +49,7 @@ const All = ({ navigation }: Props) => {
           <PokemonList.SearchBar
             animatedStyle={animatedStyle}
             onChange={setSearch}
+            loading={loading}
           />
         }
         ListHeaderComponentStyle={styles.ListHeaderComponentStyle}
