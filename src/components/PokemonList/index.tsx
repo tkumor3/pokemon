@@ -44,6 +44,7 @@ const PokemonList = ({
 
   return (
     <Animated.FlatList
+      keyboardDismissMode="on-drag"
       stickyHeaderIndices={stickyHeaderIndices}
       contentContainerStyle={styles.contentContainerStyle}
       ListHeaderComponent={ListHeaderComponent}

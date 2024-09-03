@@ -24,7 +24,7 @@ const All = ({ navigation }: Props) => {
   };
 
   const animatedStyle = useAnimatedStyle(() => ({
-    top: search === "" ? -100 + searchBar.value * 100 : 0,
+    top: -100 + searchBar.value * 100,
   }));
 
   return (

@@ -22,15 +22,21 @@ const GET_POKEMON_INDEX = gql(`
 
 const usePokemons = (searchQuery?: string) => {
   const search = searchQuery ? `%${searchQuery}%` : "%";
-  const { loading, error, data, fetchMore } = useQuery(GET_POKEMON_INDEX, {
-    variables: {
-      offset: 0,
-      limit: PAGINATION_LIMIT,
-      like: search,
-    },
-  });
+  const { loading, error, data, fetchMore, previousData } = useQuery(
+    GET_POKEMON_INDEX,
+    {
+      variables: {
+        offset: 0,
+        limit: PAGINATION_LIMIT,
+        like: search,
+      },
+    }
+  );
 
-  const pokemonIndex = data?.pokemon_v2_pokemon.map(parsePokemon) ?? [];
+  const pokemonIndex =
+    data?.pokemon_v2_pokemon.map(parsePokemon) ??
+    previousData?.pokemon_v2_pokemon.map(parsePokemon) ??
+    [];
 
   const { loadingMore, fetchMore: handleLoadMore } = useFetchMorePokemon(
     fetchMore,

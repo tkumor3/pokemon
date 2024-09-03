@@ -3,7 +3,6 @@ import Animated from "react-native-reanimated";
 
 type Props = {
   animatedStyle: { top: number };
-
   onChange: (text: string) => void;
 };
 

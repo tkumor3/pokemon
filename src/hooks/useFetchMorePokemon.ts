@@ -19,7 +19,7 @@ const useFetchMorePokemon = <T extends Pokemon>(
   }, [key]);
 
   const handleLoadMore = useCallback(async () => {
-    if (loadedAll) {
+    if (loadedAll || loadedPokemonCounter === 0) {
       return;
     }
     setLoadingMore(true);
