@@ -9,10 +9,11 @@ import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
 import LikeButton from "@components/LikeButton";
-import { SearchScreenProps } from "./types";
 import RotatingImage from "@components/RotatingImage";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "./types";
 
-type Props = SearchScreenProps<"Pokemon">;
+type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
 const Pokemon = ({ route, navigation }: Props) => {
   const { name } = route.params;
@@ -36,13 +37,11 @@ const Pokemon = ({ route, navigation }: Props) => {
             backgroundColor: defaultType
               ? POKEMON_TYPE_COLORS[defaultType]
               : "#fff",
-            flex: 2,
-            padding: 16,
-            justifyContent: "space-between",
           },
+          styles.topContainer,
         ]}
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={styles.header}>
           <Text style={styles.title}>{name}</Text>
           <LikeButton pokemonId={pokemon.id} />
         </View>
@@ -50,9 +49,9 @@ const Pokemon = ({ route, navigation }: Props) => {
           <RotatingImage imageUri={pokemon.imageUri} />
         </View>
       </View>
-      <View style={{ flex: 3, backgroundColor: "#fff", padding: 16 }}>
-        <View style={{ gap: 8 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Evolutions:</Text>
+      <View style={styles.bottomContainer}>
+        <View style={styles.gap}>
+          <Text style={styles.boldText}>Evolutions:</Text>
           {pokemon.evolutions
             ?.filter((evolution) => evolution.name !== pokemon.name)
             .map((evolution) => (
@@ -63,7 +62,7 @@ const Pokemon = ({ route, navigation }: Props) => {
                 }}
                 key={evolution.id}
               >
-                <Text style={{ textTransform: "capitalize", fontSize: 16 }}>
+                <Text style={styles.regularCapitalizeText}>
                   {evolution.name}
                 </Text>
               </Pressable>
@@ -73,7 +72,18 @@ const Pokemon = ({ route, navigation }: Props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
+  gap: { gap: 8 },
+  topContainer: {
+    flex: 2,
+    padding: 16,
+    justifyContent: "space-between",
+  },
+  boldText: { fontSize: 18, fontWeight: "bold" },
+  regularCapitalizeText: { fontSize: 16 },
+  header: { flexDirection: "row", justifyContent: "space-between" },
+  bottomContainer: { flex: 3, backgroundColor: "#fff", padding: 16 },
   container: { flex: 1 },
   pressable: {
     paddingVertical: 12,

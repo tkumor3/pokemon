@@ -1,11 +1,7 @@
 // In App.js in a new project
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PokemonIndex from "./Screens/PokemonIndex";
-import Pokemon from "./Screens/Pokemon";
-import { RootStackParamList, RootTabParamsList } from "./Screens/types";
-
+import { RootStackParamList } from "./Screens/types";
 import {
   ApolloClient,
   InMemoryCache,
@@ -15,13 +11,14 @@ import {
 } from "@apollo/client";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RetryLink } from "@apollo/client/link/retry";
-
 import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";
-import Search from "./Screens/Search";
-import Liked from "./Screens/Liked";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Pokemon from "./Screens/Pokemon";
+import PokemonListTab from "./Screens/PokemonListTab";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { getHeaderTitle } from "./Screens/utils";
 
 const link = from([
   new RetryLink({
@@ -51,28 +48,31 @@ const client = new ApolloClient({
   }),
 });
 
-const Tab = createBottomTabNavigator<RootTabParamsList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureHandlerRootView>
         <LikeContextProvider>
           <SafeAreaProvider>
             <NoConnection />
             <NavigationContainer>
-              <Tab.Navigator>
-                <Tab.Screen
-                  options={{ title: "Search", headerShown: false }}
-                  name="Search"
-                  component={Search}
+              <Stack.Navigator initialRouteName="PokemonListTab">
+                <Stack.Screen
+                  options={({ route }) => ({
+                    headerShown: false,
+                    headerTitle: getHeaderTitle(route),
+                  })}
+                  name="PokemonListTab"
+                  component={PokemonListTab}
                 />
-                <Tab.Screen
-                  options={{ title: "Liked", headerShown: false }}
-                  name="Liked"
-                  component={Liked}
+                <Stack.Screen
+                  name="Pokemon"
+                  component={Pokemon}
+                  options={{ title: "Pokemon" }}
                 />
-              </Tab.Navigator>
+              </Stack.Navigator>
             </NavigationContainer>
           </SafeAreaProvider>
         </LikeContextProvider>

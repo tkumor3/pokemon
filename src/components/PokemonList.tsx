@@ -1,15 +1,30 @@
 import Error from "@components/Error";
 import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 import PokemonItem from "./PokemonItem";
-import usePokemons from "@/src/hooks/usePokemons";
+import { ApolloError } from "@apollo/client";
+import { Pokemon } from "../types";
 
-const PokemonList = () => {
-  const { pokemonIndex, loading, error, fetchMore, loadingMore } =
-    usePokemons();
+type Props = {
+  pokemons: Pokemon[];
+  loading: boolean;
+  error?: ApolloError;
+  fetchMore: () => void;
+  loadingMore: boolean;
+  navigateToPokemon: (name: string) => void;
+};
 
+const PokemonLikedList = ({
+  pokemons,
+  loading,
+  error,
+  fetchMore,
+  loadingMore,
+  navigateToPokemon,
+}: Props) => {
   if (error) {
     return <Error />;
   }
+
   if (loading) {
     return (
       <View style={styles.loader}>
@@ -20,10 +35,11 @@ const PokemonList = () => {
 
   return (
     <FlatList
-      contentContainerStyle={{ gap: 16, marginHorizontal: 16 }}
-      data={pokemonIndex}
+      contentContainerStyle={styles.contentContainerStyle}
+      data={pokemons}
       renderItem={({ item }) => (
         <PokemonItem
+          navigateToPokemon={navigateToPokemon}
           shortName={item.name}
           imageUri={item.imageUri}
           types={item.types}
@@ -38,6 +54,7 @@ const PokemonList = () => {
 };
 
 const styles = StyleSheet.create({
+  contentContainerStyle: { gap: 16, marginHorizontal: 16 },
   loader: {
     flex: 1,
     justifyContent: "center",
@@ -45,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PokemonList;
+export default PokemonLikedList;

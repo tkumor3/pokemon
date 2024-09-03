@@ -3,30 +3,29 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-// import type { StackScreenProps } from "@react-navigation/stack";
+import type { StackScreenProps } from "@react-navigation/stack";
 
-export type SearchStackParamList = {
-  PokemonIndex: undefined;
-  Pokemon: { name: string };
-};
-
-export type RootTabParamsList = {
-  Search: NavigatorScreenParams<SearchStackParamList>;
+export type TabStackParamList = {
+  All: undefined;
   Liked: undefined;
 };
 
-export type RootTabScreenProps<T extends keyof RootTabParamsList> =
-  BottomTabScreenProps<RootTabParamsList, T>;
+export type RootStackParamList = {
+  PokemonListTab: NavigatorScreenParams<TabStackParamList>;
+  Pokemon: { name: string };
+};
 
-export type SearchScreenProps<T extends keyof SearchStackParamList> =
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  StackScreenProps<RootStackParamList, T>;
+
+export type TabScreenProps<T extends keyof TabStackParamList> =
   CompositeScreenProps<
-    NativeStackScreenProps<SearchStackParamList, T>,
-    RootTabScreenProps<keyof RootTabParamsList>
+    BottomTabScreenProps<TabStackParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
   >;
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootTabParamsList {}
+    interface RootParamList extends RootStackParamList {}
   }
 }
