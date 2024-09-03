@@ -6,6 +6,7 @@ import usePokemons from "../hooks/usePokemons";
 import { TabScreenProps } from "./types";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import debounce from "lodash/debounce";
+import { SEARCH_HEIGHT } from "../constants";
 
 type Props = TabScreenProps<"All">;
 
@@ -24,7 +25,7 @@ const All = ({ navigation }: Props) => {
   };
 
   const animatedStyle = useAnimatedStyle(() => ({
-    top: -100 + searchBar.value * 100,
+    top: -SEARCH_HEIGHT + searchBar.value * SEARCH_HEIGHT,
   }));
 
   return (
@@ -61,7 +62,7 @@ const All = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   ListHeaderComponentStyle: {
     position: "relative",
-    height: 70,
+    height: SEARCH_HEIGHT,
   },
   logoImage: { flex: 1, height: "100%" },
   logoContainer: {
