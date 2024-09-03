@@ -4,8 +4,8 @@ import parsePokemon from "./utils/parsePokemon";
 import useFetchMorePokemon, { PAGINATION_LIMIT } from "./useFetchMorePokemon";
 
 const GET_POKEMON_INDEX = gql(`
-  query pokemons($offset: Int, $limit: Int) {
-    pokemon_v2_pokemon(limit: $limit, offset: $offset) {
+  query pokemons($offset: Int, $limit: Int, $like: String) {
+    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: {name: {_ilike: $like}}) {
       id
       name
       pokemon_v2_pokemonsprites {
@@ -20,11 +20,13 @@ const GET_POKEMON_INDEX = gql(`
   }
 `);
 
-const usePokemons = () => {
+const usePokemons = (searchQuery?: string) => {
+  const search = searchQuery ? `%${searchQuery}%` : "%";
   const { loading, error, data, fetchMore } = useQuery(GET_POKEMON_INDEX, {
     variables: {
       offset: 0,
       limit: PAGINATION_LIMIT,
+      like: search,
     },
   });
 
@@ -32,7 +34,8 @@ const usePokemons = () => {
 
   const { loadingMore, fetchMore: handleLoadMore } = useFetchMorePokemon(
     fetchMore,
-    pokemonIndex.length
+    pokemonIndex.length,
+    search
   );
 
   return {
