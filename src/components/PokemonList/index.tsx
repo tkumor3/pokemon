@@ -6,6 +6,7 @@ import { Pokemon } from "../../types";
 import Animated, { FlatListPropsWithLayout } from "react-native-reanimated";
 import SearchBar from "./SearchBar";
 import useScrollHandler from "./hooks/useScrollHandler";
+import NotFound from "./NotFound";
 
 type Props = {
   pokemons: Pokemon[];
@@ -49,6 +50,7 @@ const PokemonList = ({
       contentContainerStyle={styles.contentContainerStyle}
       ListHeaderComponent={ListHeaderComponent}
       ListHeaderComponentStyle={ListHeaderComponentStyle}
+      ListEmptyComponent={<NotFound />}
       data={pokemons}
       renderItem={({ item }) => (
         <PokemonItem
