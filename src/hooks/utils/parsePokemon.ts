@@ -1,9 +1,10 @@
+import { Pokemon } from "@/src/types";
 import { PokemonQuery } from "../../__generated__/graphql";
 import { PokemonTypes } from "@/src/constants";
 
-type Pokemon = PokemonQuery["pokemon_v2_pokemon"][number];
+type PokemonGql = PokemonQuery["pokemon_v2_pokemon"][number];
 
-const parsePokemon = (pokemon: Pokemon) => {
+const parsePokemon = (pokemon: PokemonGql): Pokemon => {
   return {
     id: pokemon.id,
     name: pokemon.name,
