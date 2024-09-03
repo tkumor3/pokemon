@@ -11,7 +11,7 @@ const Liked = ({ navigation }: Props) => {
   const { pokemonIndex, loading, error, fetchMore, loadingMore } =
     useLikedPokemons();
 
-  const handlePress = (name: string) => {
+  const navigateToPokemon = (name: string) => {
     return navigation.navigate("Pokemon", { name });
   };
 
@@ -23,7 +23,7 @@ const Liked = ({ navigation }: Props) => {
         error={error}
         fetchMore={fetchMore}
         loadingMore={loadingMore}
-        handlePress={handlePress}
+        navigateToPokemon={navigateToPokemon}
       />
     </SafeAreaView>
   );
