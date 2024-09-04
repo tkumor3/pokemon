@@ -1,17 +1,14 @@
 import React from "react";
 
-import { View, StyleSheet, Image, SafeAreaView } from "react-native";
+import { View, StyleSheet, Text, SafeAreaView } from "react-native";
 import PokemonList from "@components/PokemonList";
+import { getSystem } from "../../modules/system-checker";
 
 const PokemonIndex = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image
-          style={styles.logoImage}
-          resizeMode="contain"
-          source={require("assets/images/pokemon_logo.png")}
-        />
+        <Text>{getSystem()}</Text>
       </View>
       <PokemonList />
     </SafeAreaView>

@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "tvos", "android", "web"],
+  "ios": {
+    "modules": ["SystemCheckerModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.systemchecker.SystemCheckerModule"]
+  }
+}
