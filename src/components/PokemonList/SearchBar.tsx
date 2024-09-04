@@ -38,6 +38,10 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  ListHeaderComponentStyle: {
+    position: "relative",
+    height: SEARCH_HEIGHT,
+  },
   container: {
     backgroundColor: "#fff",
     paddingVertical: 16,
@@ -64,4 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+SearchBar.ContainerStyle = styles.ListHeaderComponentStyle;
+
 export default SearchBar;

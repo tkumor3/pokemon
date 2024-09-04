@@ -1,12 +1,10 @@
 import React, { useMemo } from "react";
-import { StyleSheet } from "react-native";
 import PokemonList from "@components/PokemonList";
 import usePokemons from "../hooks/usePokemons";
 import debounce from "lodash/debounce";
 import { TabScreenProps } from "../Screens/types";
 import Error from "./Error";
 import useSearchBarScrollHandler from "./PokemonList/hooks/useSearchBarScrollHandler";
-import { SEARCH_HEIGHT } from "./PokemonList/SearchBar";
 
 type Props = Pick<TabScreenProps<"All">, "navigation">;
 
@@ -45,28 +43,9 @@ const SearchPokemonList = ({ navigation }: Props) => {
           loading={loading}
         />
       }
-      ListHeaderComponentStyle={styles.ListHeaderComponentStyle}
+      ListHeaderComponentStyle={PokemonList.SearchBar.ContainerStyle}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  ListHeaderComponentStyle: {
-    position: "relative",
-    height: SEARCH_HEIGHT,
-  },
-  logoImage: { flex: 1, height: "100%" },
-  logoContainer: {
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 24,
-    marginVertical: 24,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
 
 export default SearchPokemonList;
