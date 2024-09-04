@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
 import { TabScreenProps } from "./types";
-import { SEARCH_HEIGHT } from "../constants";
 import SearchPokemonList from "@components/SearchPokemonList";
 
 type Props = TabScreenProps<"All">;

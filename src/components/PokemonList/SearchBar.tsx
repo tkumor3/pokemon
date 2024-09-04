@@ -5,15 +5,22 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, { SharedValue } from "react-native-reanimated";
+import { useAnimatedStyle } from "react-native-reanimated";
 
 type Props = {
-  animatedStyle: { top: number };
+  searchBarVisiblePart: SharedValue<number>;
   loading: boolean;
   onChange: (text: string) => void;
 };
 
-const SearchBar = ({ animatedStyle, onChange, loading }: Props) => {
+export const SEARCH_HEIGHT = 70;
+
+const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
+  const animatedStyle = useAnimatedStyle(() => ({
+    top: -SEARCH_HEIGHT + searchBarVisiblePart.value * SEARCH_HEIGHT,
+  }));
+
   return (
     <Animated.View style={[animatedStyle, styles.container]}>
       <View style={styles.searchWithIcon}>
