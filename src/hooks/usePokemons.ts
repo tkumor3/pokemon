@@ -35,12 +35,11 @@ const usePokemons = (searchQuery?: string) => {
 
   const pokemonIndex =
     data?.pokemon_v2_pokemon.map(parsePokemon) ??
-    previousData?.pokemon_v2_pokemon.map(parsePokemon) ??
-    [];
+    previousData?.pokemon_v2_pokemon.map(parsePokemon);
 
   const { loadingMore, fetchMore: handleLoadMore } = useFetchMorePokemon(
     fetchMore,
-    pokemonIndex.length,
+    pokemonIndex?.length ?? 0,
     search
   );
 

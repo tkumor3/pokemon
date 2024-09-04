@@ -9,7 +9,7 @@ import useScrollHandler from "./hooks/useScrollHandler";
 import NotFound from "./NotFound";
 
 type Props = {
-  pokemons: Pokemon[];
+  pokemons: Pokemon[] | undefined;
   loading: boolean;
   error?: ApolloError;
   fetchMore: () => void;
@@ -45,12 +45,13 @@ const PokemonList = ({
 
   return (
     <Animated.FlatList
+      keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
       stickyHeaderIndices={stickyHeaderIndices}
       contentContainerStyle={styles.contentContainerStyle}
       ListHeaderComponent={ListHeaderComponent}
       ListHeaderComponentStyle={ListHeaderComponentStyle}
-      ListEmptyComponent={<NotFound />}
+      ListEmptyComponent={pokemons && !loading ? <NotFound /> : null}
       data={pokemons}
       renderItem={({ item }) => (
         <PokemonItem
