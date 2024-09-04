@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   Pressable,
   ActivityIndicator,
 } from "react-native";
@@ -10,6 +9,7 @@ import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
 import LikeButton from "@components/LikeButton";
+import RotatingImage from "@components/RotatingImage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
 
@@ -46,13 +46,7 @@ const Pokemon = ({ route, navigation }: Props) => {
           <LikeButton pokemonId={pokemon.id} />
         </View>
         <View style={styles.imageContainer}>
-          <Image
-            width={200}
-            height={200}
-            source={{
-              uri: pokemon.imageUri,
-            }}
-          />
+          <RotatingImage imageUri={pokemon.imageUri} />
         </View>
       </View>
       <View style={styles.bottomContainer}>
