@@ -1,11 +1,7 @@
 // In App.js in a new project
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import PokemonIndex from "./Screens/PokemonIndex";
-import Pokemon from "./Screens/Pokemon";
 import { RootStackParamList } from "./Screens/types";
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -15,9 +11,13 @@ import {
 } from "@apollo/client";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RetryLink } from "@apollo/client/link/retry";
-
 import NoConnection from "@components/NoConnection";
 import { offsetLimitPagination } from "@apollo/client/utilities";
+import { LikeContextProvider } from "./contexts/LikedContext";
+import Pokemon from "./Screens/Pokemon";
+import PokemonListTab from "./Screens/PokemonListTab";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { getHeaderTitle } from "./Screens/utils";
 
 const link = from([
   new RetryLink({
@@ -52,23 +52,28 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   return (
     <ApolloProvider client={client}>
-      <SafeAreaProvider>
-        <NoConnection />
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              options={{ title: "Pokemon", headerShown: false }}
-              name="PokemonIndex"
-              component={PokemonIndex}
-            />
-            <Stack.Screen
-              name="Pokemon"
-              component={Pokemon}
-              options={{ title: "Pokemon" }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <LikeContextProvider>
+        <SafeAreaProvider>
+          <NoConnection />
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="PokemonListTab">
+              <Stack.Screen
+                options={({ route }) => ({
+                  headerShown: false,
+                  headerTitle: getHeaderTitle(route),
+                })}
+                name="PokemonListTab"
+                component={PokemonListTab}
+              />
+              <Stack.Screen
+                name="Pokemon"
+                component={Pokemon}
+                options={{ title: "Pokemon" }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </LikeContextProvider>
     </ApolloProvider>
   );
 }

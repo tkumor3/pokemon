@@ -1,30 +1,29 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
 import PokemonType from "./PokemonType";
-import { useNavigation } from "@react-navigation/native";
 
 type PokemonItemProps = {
   imageUri: string;
   shortName: string;
   types: PokemonTypes[];
+  navigateToPokemon: (name: string) => void;
 };
 
-const PokemonItem = ({ imageUri, shortName, types }: PokemonItemProps) => {
-  const navigation = useNavigation();
-
-  const handlePress = () => {
-    return navigation.navigate("Pokemon", { name: shortName });
-  };
-
+const PokemonItem = ({
+  imageUri,
+  shortName,
+  types,
+  navigateToPokemon,
+}: PokemonItemProps) => {
   return (
     <Pressable
-      onPress={handlePress}
+      onPress={() => navigateToPokemon(shortName)}
       style={[
         { backgroundColor: POKEMON_TYPE_COLORS[types[0]] },
         styles.pokemonItem,
       ]}
     >
-      <View style={{ gap: 8 }}>
+      <View style={styles.gap}>
         <Text style={styles.title}>{shortName}</Text>
         <View style={styles.tagsContainer}>
           {types.map((type) => (
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   tagsContainer: { flexDirection: "row", gap: 8 },
-
+  gap: { gap: 8 },
   title: {
     color: "#fff",
     fontSize: 20,

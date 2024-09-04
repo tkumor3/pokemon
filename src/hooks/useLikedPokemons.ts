@@ -1,11 +1,12 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "../__generated__";
+import { useLikeContext } from "../contexts/LikedContext";
 import parsePokemon from "./utils/parsePokemon";
 import useFetchMorePokemon, { PAGINATION_LIMIT } from "./useFetchMorePokemon";
 
 const GET_POKEMON_INDEX = gql(`
-  query pokemons($offset: Int, $limit: Int) {
-    pokemon_v2_pokemon(limit: $limit, offset: $offset) {
+  query liked_pokemons($offset: Int, $limit: Int, $ids: [Int!]) {
+    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: {id: {_in: $ids}}) {
       id
       name
       pokemon_v2_pokemonsprites {
@@ -20,11 +21,13 @@ const GET_POKEMON_INDEX = gql(`
   }
 `);
 
-const usePokemons = () => {
+const useLikedPokemons = () => {
+  const { likeList } = useLikeContext();
   const { loading, error, data, fetchMore } = useQuery(GET_POKEMON_INDEX, {
     variables: {
       offset: 0,
       limit: PAGINATION_LIMIT,
+      ids: likeList,
     },
   });
 
@@ -44,4 +47,4 @@ const usePokemons = () => {
   };
 };
 
-export default usePokemons;
+export default useLikedPokemons;
