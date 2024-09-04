@@ -20,5 +20,3 @@ export const POKEMON_TYPE_COLORS = {
 } as const;
 
 export type PokemonTypes = keyof typeof POKEMON_TYPE_COLORS;
-
-export const SEARCH_HEIGHT = 70;

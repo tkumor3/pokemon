@@ -1,33 +1,12 @@
 import React from "react";
-
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
-import PokemonList, { useScrollHandler } from "@components/PokemonList";
-import usePokemons from "../hooks/usePokemons";
 import { TabScreenProps } from "./types";
-import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import debounce from "lodash/debounce";
 import { SEARCH_HEIGHT } from "../constants";
+import SearchPokemonList from "@components/SearchPokemonList";
 
 type Props = TabScreenProps<"All">;
 
 const All = ({ navigation }: Props) => {
-  const [search, _setSearch] = React.useState("");
-  const setSearch = debounce(_setSearch, 500);
-
-  const { pokemonIndex, loading, error, fetchMore, loadingMore } =
-    usePokemons(search);
-
-  const searchBar = useSharedValue(0);
-  const scrollHandler = useScrollHandler(searchBar);
-
-  const navigateToPokemon = (name: string) => {
-    return navigation.navigate("Pokemon", { name });
-  };
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    top: -SEARCH_HEIGHT + searchBar.value * SEARCH_HEIGHT,
-  }));
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -37,33 +16,12 @@ const All = ({ navigation }: Props) => {
           source={require("assets/images/pokemon_logo.png")}
         />
       </View>
-      <PokemonList
-        pokemons={pokemonIndex}
-        loading={loading}
-        error={error}
-        fetchMore={fetchMore}
-        loadingMore={loadingMore}
-        navigateToPokemon={navigateToPokemon}
-        onScroll={scrollHandler}
-        stickyHeaderIndices={[0]}
-        ListHeaderComponent={
-          <PokemonList.SearchBar
-            animatedStyle={animatedStyle}
-            onChange={setSearch}
-            loading={loading}
-          />
-        }
-        ListHeaderComponentStyle={styles.ListHeaderComponentStyle}
-      />
+      <SearchPokemonList navigation={navigation} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  ListHeaderComponentStyle: {
-    position: "relative",
-    height: SEARCH_HEIGHT,
-  },
   logoImage: { flex: 1, height: "100%" },
   logoContainer: {
     height: 100,

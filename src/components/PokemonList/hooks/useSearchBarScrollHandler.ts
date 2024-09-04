@@ -1,6 +1,5 @@
 import {
   Easing,
-  SharedValue,
   useAnimatedScrollHandler,
   useSharedValue,
   withTiming,
@@ -9,9 +8,10 @@ import {
 const duration = 700;
 const easing = Easing.bezier(0, 0.25, 0.25, 1);
 
-const useScrollHandler = (searchBar: SharedValue<number>) => {
+const useSearchBarScrollHandler = () => {
   const isScrolling = useSharedValue(false);
   const lastContentOffset = useSharedValue(0);
+  const searchBar = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -33,7 +33,7 @@ const useScrollHandler = (searchBar: SharedValue<number>) => {
       isScrolling.value = false;
     },
   });
-  return scrollHandler;
+  return { scrollHandler, searchBar };
 };
 
-export default useScrollHandler;
+export default useSearchBarScrollHandler;

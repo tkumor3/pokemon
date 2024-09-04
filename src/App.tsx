@@ -41,11 +41,7 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          pokemon_v2_pokemon: offsetLimitPagination([
-            "where.id",
-            "$like",
-            "$name",
-          ]),
+          pokemon_v2_pokemon: offsetLimitPagination(["$ids", "$like", "$name"]),
         },
       },
     },

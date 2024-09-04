@@ -7,7 +7,6 @@ export type Pokemon = {
   types: PokemonTypes[];
   evolutions:
     | {
-        __typename?: "pokemon_v2_pokemonspecies";
         id: number;
         name: string;
       }[]
