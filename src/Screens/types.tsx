@@ -13,6 +13,7 @@ export type TabStackParamList = {
 export type RootStackParamList = {
   PokemonListTab: NavigatorScreenParams<TabStackParamList>;
   Pokemon: { name: string };
+  StatisticsModal: { name: string };
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

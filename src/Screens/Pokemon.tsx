@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Pressable,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
@@ -12,6 +13,7 @@ import LikeButton from "@components/LikeButton";
 import RotatingImage from "@components/RotatingImage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
+import capitalize from "lodash/capitalize";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
@@ -63,10 +65,16 @@ const Pokemon = ({ route, navigation }: Props) => {
                 key={evolution.id}
               >
                 <Text style={styles.regularCapitalizeText}>
-                  {evolution.name}
+                  {capitalize(evolution.name)}
                 </Text>
               </Pressable>
             ))}
+          <Button
+            title="Statistics"
+            onPress={() => {
+              navigation.navigate("StatisticsModal", { name: pokemon.name });
+            }}
+          />
         </View>
       </View>
     </View>
