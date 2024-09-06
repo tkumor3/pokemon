@@ -75,6 +75,12 @@ const Pokemon = ({ route, navigation }: Props) => {
               navigation.navigate("StatisticsModal", { name: pokemon.name });
             }}
           />
+          <Button
+            title="Location"
+            onPress={() => {
+              navigation.navigate("Location");
+            }}
+          />
         </View>
       </View>
     </View>
