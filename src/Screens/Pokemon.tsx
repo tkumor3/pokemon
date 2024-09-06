@@ -58,7 +58,7 @@ const Pokemon = ({ route, navigation }: Props) => {
               <Pressable
                 style={styles.pressable}
                 onPress={() => {
-                  navigation.navigate("Pokemon", { name: evolution.name });
+                  navigation.push("Pokemon", { name: evolution.name });
                 }}
                 key={evolution.id}
               >

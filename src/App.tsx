@@ -19,6 +19,7 @@ import Pokemon from "./Screens/Pokemon";
 import PokemonListTab from "./Screens/PokemonListTab";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getHeaderTitle } from "./Screens/utils";
+import capitalize from "lodash/capitalize";
 
 const link = from([
   new RetryLink({
@@ -70,7 +71,9 @@ function App() {
                 <Stack.Screen
                   name="Pokemon"
                   component={Pokemon}
-                  options={{ title: "Pokemon" }}
+                  options={({ route }) => ({
+                    title: capitalize(route.params.name),
+                  })}
                 />
               </Stack.Navigator>
             </NavigationContainer>
