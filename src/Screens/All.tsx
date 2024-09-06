@@ -1,20 +1,11 @@
 import React from "react";
-
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
-import PokemonList from "@components/PokemonList";
-import usePokemons from "../hooks/usePokemons";
 import { TabScreenProps } from "./types";
+import SearchPokemonList from "@components/SearchPokemonList";
 
 type Props = TabScreenProps<"All">;
 
 const All = ({ navigation }: Props) => {
-  const { pokemonIndex, loading, error, fetchMore, loadingMore } =
-    usePokemons();
-
-  const navigateToPokemon = (name: string) => {
-    return navigation.navigate("Pokemon", { name });
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -24,14 +15,7 @@ const All = ({ navigation }: Props) => {
           source={require("assets/images/pokemon_logo.png")}
         />
       </View>
-      <PokemonList
-        pokemons={pokemonIndex}
-        loading={loading}
-        error={error}
-        fetchMore={fetchMore}
-        loadingMore={loadingMore}
-        navigateToPokemon={navigateToPokemon}
-      />
+      <SearchPokemonList navigation={navigation} />
     </SafeAreaView>
   );
 };

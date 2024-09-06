@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type Pokemon = { pokemon_v2_pokemon: { id: number; name: string }[] };
 
@@ -9,13 +9,17 @@ export const PAGINATION_LIMIT = 10;
 
 const useFetchMorePokemon = <T extends Pokemon>(
   fetchMore: FetchMore<T>,
-  loadedPokemonCounter: number
+  loadedPokemonCounter: number,
+  key?: string
 ) => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [loadedAll, setLoadedAll] = useState(false);
+  useEffect(() => {
+    setLoadedAll(false);
+  }, [key]);
 
   const handleLoadMore = useCallback(async () => {
-    if (loadedAll) {
+    if (loadedAll || loadedPokemonCounter === 0) {
       return;
     }
     setLoadingMore(true);
