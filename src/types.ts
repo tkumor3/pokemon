@@ -11,4 +11,5 @@ export type Pokemon = {
         name: string;
       }[]
     | undefined;
+  statistics: { name: string; value: number }[] | undefined;
 };

@@ -16,6 +16,10 @@ const parsePokemon = (pokemon: PokemonGql): Pokemon => {
     evolutions:
       pokemon.pokemon_v2_pokemonspecy?.pokemon_v2_evolutionchain
         ?.pokemon_v2_pokemonspecies,
+    statistics: pokemon.pokemon_v2_pokemonstats?.map((stat) => ({
+      name: stat.pokemon_v2_stat?.name ?? "unknown",
+      value: stat.base_stat,
+    })),
   };
 };
 

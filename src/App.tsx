@@ -20,6 +20,7 @@ import PokemonListTab from "./Screens/PokemonListTab";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getHeaderTitle } from "./Screens/utils";
 import capitalize from "lodash/capitalize";
+import StatisticsModal from "./Screens/StatisticsModal";
 
 const link = from([
   new RetryLink({
@@ -60,21 +61,30 @@ function App() {
             <NoConnection />
             <NavigationContainer>
               <Stack.Navigator initialRouteName="PokemonListTab">
-                <Stack.Screen
-                  options={({ route }) => ({
-                    headerShown: false,
-                    headerTitle: getHeaderTitle(route),
-                  })}
-                  name="PokemonListTab"
-                  component={PokemonListTab}
-                />
-                <Stack.Screen
-                  name="Pokemon"
-                  component={Pokemon}
-                  options={({ route }) => ({
-                    title: capitalize(route.params.name),
-                  })}
-                />
+                <Stack.Group>
+                  <Stack.Screen
+                    options={({ route }) => ({
+                      headerShown: false,
+                      headerTitle: getHeaderTitle(route),
+                    })}
+                    name="PokemonListTab"
+                    component={PokemonListTab}
+                  />
+                  <Stack.Screen
+                    name="Pokemon"
+                    component={Pokemon}
+                    options={({ route }) => ({
+                      title: capitalize(route.params.name),
+                    })}
+                  />
+                </Stack.Group>
+                <Stack.Group screenOptions={{ presentation: "modal" }}>
+                  <Stack.Screen
+                    name="StatisticsModal"
+                    component={StatisticsModal}
+                    options={{ title: "Statistics" }}
+                  />
+                </Stack.Group>
               </Stack.Navigator>
             </NavigationContainer>
           </SafeAreaProvider>
