@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import * as LocationLib from "expo-location";
 
 const Location = () => {
-  const [location, setLocation] = useState<Location.LocationObject | null>(
+  const [location, setLocation] = useState<LocationLib.LocationObject | null>(
     null
   );
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
