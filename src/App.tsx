@@ -23,7 +23,7 @@ import capitalize from "lodash/capitalize";
 import StatisticsModal from "./Screens/StatisticsModal";
 import Location from "./Screens/Location";
 import { useColorScheme } from "react-native";
-import { LightTheme, DarkTheme } from "@constants/colors";
+import { LightTheme, DarkTheme } from "@constants/themes";
 
 const link = from([
   new RetryLink({

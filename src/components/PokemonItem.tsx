@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
 import PokemonType from "./PokemonType";
 import { useTheme } from "@react-navigation/native";
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 import { useMemo } from "react";
 
 type PokemonItemProps = {
@@ -48,7 +48,7 @@ const PokemonItem = ({
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     pokemonItem: {
       flex: 1,

@@ -1,20 +1,20 @@
 import {
-  Theme as TTheme,
+  Theme,
   DefaultTheme,
   DarkTheme as DefaultDarkTheme,
 } from "@react-navigation/native";
 
-export type Theme = {
-  colors: TTheme["colors"] & {
+export type ExtendedTheme = {
+  colors: Theme["colors"] & {
     backgroundColor: string;
     color: string;
     colorRevert: string;
     backgroundOpacity: string;
     buttonGrey: string;
   };
-} & Pick<TTheme, "dark">;
+} & Pick<Theme, "dark">;
 
-export const LightTheme: Theme = {
+export const LightTheme: ExtendedTheme = {
   dark: false,
   colors: {
     ...DefaultTheme.colors,
@@ -26,7 +26,7 @@ export const LightTheme: Theme = {
   },
 } as const;
 
-export const DarkTheme: Theme = {
+export const DarkTheme: ExtendedTheme = {
   dark: true,
   colors: {
     ...DefaultDarkTheme.colors,
@@ -39,5 +39,5 @@ export const DarkTheme: Theme = {
 } as const;
 
 declare module "@react-navigation/native" {
-  export function useTheme(): Theme;
+  export function useTheme(): ExtendedTheme;
 }

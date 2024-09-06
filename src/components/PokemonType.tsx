@@ -1,4 +1,4 @@
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { View, Text, StyleSheet } from "react-native";
@@ -14,7 +14,7 @@ const PokemonType = ({ type }: { type: string }) => {
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     container: {
       borderRadius: 24,

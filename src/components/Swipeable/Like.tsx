@@ -4,7 +4,7 @@ import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useLikeContext } from "../../contexts/LikedContext";
 import { useSwipeable } from ".";
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 import { useTheme } from "@react-navigation/native";
 
 type LikeProps = {
@@ -51,7 +51,7 @@ const SwipeableLike = ({ id, children }: Props) => {
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     button: {
       borderRadius: 8,

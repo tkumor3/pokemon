@@ -4,7 +4,7 @@ import { RootStackParamList } from "./types";
 import usePokemon from "../hooks/usePokemon";
 import Error from "@components/Error";
 import ProgressBar from "@components/ProgressBar";
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 
@@ -41,7 +41,7 @@ const StatisticsModal = ({ route }: Props) => {
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     container: {
       flex: 1,

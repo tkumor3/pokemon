@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TabScreenProps } from "./types";
 import { StyleSheet } from "react-native";
 import LikedPokemonList from "@components/LikedPokemonList";
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 import { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
 
@@ -19,7 +19,7 @@ const Liked = ({ navigation }: Props) => {
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.backgroundColor },
   });

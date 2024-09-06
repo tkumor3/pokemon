@@ -1,4 +1,4 @@
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import {
@@ -43,7 +43,7 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     ListHeaderComponentStyle: {
       position: "relative",

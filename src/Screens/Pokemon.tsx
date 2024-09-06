@@ -16,7 +16,7 @@ import { RootStackParamList } from "./types";
 import capitalize from "lodash/capitalize";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
@@ -92,7 +92,7 @@ const Pokemon = ({ route, navigation }: Props) => {
   );
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     gap: { gap: 8 },
     topContainer: {

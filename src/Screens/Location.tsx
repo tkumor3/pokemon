@@ -4,7 +4,7 @@ import Map from "@components/Map/Map";
 
 import * as LocationLib from "expo-location";
 import { useTheme } from "@react-navigation/native";
-import { Theme } from "@constants/colors";
+import { ExtendedTheme } from "@constants/themes";
 
 const Location = () => {
   const { colors } = useTheme();
@@ -33,7 +33,7 @@ const Location = () => {
   return <Map />;
 };
 
-const genStyles = (colors: Theme["colors"]) =>
+const genStyles = (colors: ExtendedTheme["colors"]) =>
   StyleSheet.create({
     container: {
       flex: 1,
