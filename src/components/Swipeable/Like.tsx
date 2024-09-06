@@ -31,7 +31,7 @@ const Like = ({ progress, id }: LikeProps) => {
 type Props = PropsWithChildren<{ id: number }>;
 
 const SwipeableLike = ({ id, children }: Props) => {
-  const { onOpenNextSwipeable } = useSwipeable();
+  const { onOpenSwipeable } = useSwipeable();
   const swipeRef = useRef<Swipeable | null>(null);
 
   return (
@@ -40,7 +40,7 @@ const SwipeableLike = ({ id, children }: Props) => {
       renderRightActions={(progressAnimatedValue) => (
         <Like id={id} progress={progressAnimatedValue} />
       )}
-      onSwipeableWillOpen={() => onOpenNextSwipeable(swipeRef)}
+      onSwipeableWillOpen={() => onOpenSwipeable(swipeRef)}
     >
       {children}
     </Swipeable>
