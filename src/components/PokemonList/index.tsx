@@ -5,7 +5,6 @@ import Animated, { FlatListPropsWithLayout } from "react-native-reanimated";
 import SearchBar from "./SearchBar";
 import NotFound from "./NotFound";
 import Swipeable from "@components/Swipeable";
-import { RefObject, useCallback, useRef } from "react";
 
 type PokemonListProps = Omit<
   FlatListPropsWithLayout<Pokemon>,
