@@ -3,8 +3,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { addEventListener } from "@react-native-community/netinfo";
 import { useEffect, useState } from "react";
 import { POKEMON_TYPE_COLORS } from "../constants";
+import { useTheme } from "@react-navigation/native";
 
 const NoConnection = () => {
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const [hasConnection, setHasConnection] = useState(true);
   useEffect(() => {
@@ -31,7 +33,7 @@ const NoConnection = () => {
           zIndex: 999,
         }}
       >
-        <Text style={{ color: "#fff" }}>No internet connection</Text>
+        <Text style={{ color: colors.color }}>No internet connection</Text>
       </View>
     )
   );

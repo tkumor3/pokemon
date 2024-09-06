@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import Map from "@components/Map/Map";
 
 import * as LocationLib from "expo-location";
+import { useTheme } from "@react-navigation/native";
+import { Theme } from "@constants/colors";
 
 const Location = () => {
+  const { colors } = useTheme();
+  const styles = useMemo(() => genStyles(colors), [colors]);
   const [status, setStatus] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,18 +33,19 @@ const Location = () => {
   return <Map />;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  paragraph: {
-    fontSize: 18,
-    textAlign: "center",
-  },
-});
+const genStyles = (colors: Theme["colors"]) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 20,
+      backgroundColor: colors.backgroundColor,
+    },
+    paragraph: {
+      fontSize: 18,
+      textAlign: "center",
+    },
+  });
 
 export default Location;

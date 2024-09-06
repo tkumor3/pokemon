@@ -1,3 +1,6 @@
+import { Theme } from "@constants/colors";
+import { useTheme } from "@react-navigation/native";
+import { useMemo } from "react";
 import {
   ActivityIndicator,
   TextInput,
@@ -21,6 +24,9 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
     top: -SEARCH_HEIGHT + searchBarVisiblePart.value * SEARCH_HEIGHT,
   }));
 
+  const { colors } = useTheme();
+  const styles = useMemo(() => genStyles(colors), [colors]);
+
   return (
     <Animated.View style={[animatedStyle, styles.container]}>
       <View style={styles.searchWithIcon}>
@@ -37,38 +43,47 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const genStyles = (colors: Theme["colors"]) =>
+  StyleSheet.create({
+    ListHeaderComponentStyle: {
+      position: "relative",
+      height: SEARCH_HEIGHT,
+    },
+    container: {
+      backgroundColor: colors.backgroundColor,
+      paddingVertical: 16,
+      position: "absolute",
+      left: 0,
+      right: 0,
+    },
+    searchWithIcon: { flex: 1, flexDirection: "row", gap: 4 },
+    textInput: {
+      flex: 1,
+      borderWidth: 1,
+      padding: 8,
+      borderRadius: 8,
+      borderColor: colors.border,
+      fontSize: 20,
+      color: colors.color,
+    },
+    iconContainer: {
+      height: 40,
+      width: 40,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    text: {
+      fontSize: 20,
+    },
+  });
+
+const headerStyles = StyleSheet.create({
   ListHeaderComponentStyle: {
     position: "relative",
     height: SEARCH_HEIGHT,
   },
-  container: {
-    backgroundColor: "#fff",
-    paddingVertical: 16,
-    position: "absolute",
-    left: 0,
-    right: 0,
-  },
-  searchWithIcon: { flex: 1, flexDirection: "row", gap: 4 },
-  textInput: {
-    flex: 1,
-    borderWidth: 1,
-    padding: 8,
-    borderRadius: 8,
-    borderColor: "#d3d3d3",
-    fontSize: 20,
-  },
-  iconContainer: {
-    height: 40,
-    width: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    fontSize: 20,
-  },
 });
 
-SearchBar.ContainerStyle = styles.ListHeaderComponentStyle;
+SearchBar.ContainerStyle = headerStyles.ListHeaderComponentStyle;
 
 export default SearchBar;
