@@ -4,6 +4,7 @@ import { Pokemon } from "../../types";
 import Animated, { FlatListPropsWithLayout } from "react-native-reanimated";
 import SearchBar from "./SearchBar";
 import NotFound from "./NotFound";
+import Swipeable from "@components/Swipeable";
 
 type PokemonListProps = Omit<
   FlatListPropsWithLayout<Pokemon>,
@@ -30,24 +31,30 @@ const PokemonList = ({
   navigateToPokemon,
   ...props
 }: PokemonListProps) => (
-  <Animated.FlatList
-    ListEmptyComponent={pokemons && !loading ? <NotFound /> : null}
-    data={pokemons}
-    contentContainerStyle={styles.contentContainerStyle}
-    renderItem={({ item }) => (
-      <PokemonItem
-        navigateToPokemon={navigateToPokemon}
-        shortName={item.name}
-        imageUri={item.imageUri}
-        types={item.types}
-      />
-    )}
-    onEndReached={fetchMore}
-    onEndReachedThreshold={0.1}
-    keyExtractor={(item) => item.name}
-    ListFooterComponent={loadingMore || loading ? <ActivityIndicator /> : null}
-    {...props}
-  />
+  <Swipeable.Provider>
+    <Animated.FlatList
+      ListEmptyComponent={pokemons && !loading ? <NotFound /> : null}
+      data={pokemons}
+      contentContainerStyle={styles.contentContainerStyle}
+      renderItem={({ item }) => (
+        <Swipeable.Like id={item.id}>
+          <PokemonItem
+            navigateToPokemon={navigateToPokemon}
+            shortName={item.name}
+            imageUri={item.imageUri}
+            types={item.types}
+          />
+        </Swipeable.Like>
+      )}
+      onEndReached={fetchMore}
+      onEndReachedThreshold={0.1}
+      keyExtractor={(item) => item.name}
+      ListFooterComponent={
+        loadingMore || loading ? <ActivityIndicator /> : null
+      }
+      {...props}
+    />
+  </Swipeable.Provider>
 );
 
 const styles = StyleSheet.create({
