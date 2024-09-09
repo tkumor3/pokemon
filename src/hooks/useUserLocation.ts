@@ -33,17 +33,20 @@ function emitChange() {
   }
 }
 
-TaskManager.defineTask(LOCATION_TASK, ({ data: { locations }, error }: any) => {
+const locationTask: TaskManager.TaskManagerTaskExecutor<{
+  locations: LocationLib.LocationObject[];
+}> = async ({ data: { locations }, error }) => {
   if (error) {
     console.error(error);
     return;
   }
   location = locations[0];
-  console.log(location);
   emitChange();
-});
+};
 
-const requestPermissions = async () => {
+TaskManager.defineTask(LOCATION_TASK, locationTask);
+
+const requestPermissionsAndStartLocationUpdates = async () => {
   const { status: foregroundStatus } =
     await LocationLib.requestForegroundPermissionsAsync();
   if (foregroundStatus !== "granted") {
@@ -62,7 +65,7 @@ const useUserLocation = () => {
   useEffect(() => {
     (async () => {
       try {
-        await requestPermissions();
+        await requestPermissionsAndStartLocationUpdates();
       } catch (error) {
         if (error instanceof Error) {
           setErrorMsg(error.message);
