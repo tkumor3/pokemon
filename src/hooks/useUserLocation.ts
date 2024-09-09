@@ -1,4 +1,5 @@
 import * as LocationLib from "expo-location";
+import isEqual from "lodash/isEqual";
 import { useState, useEffect, useRef } from "react";
 
 const requestLocationPermission = async () => {
@@ -21,7 +22,13 @@ const useUserLocation = () => {
         await requestLocationPermission();
         intervalRef.current = setInterval(async () => {
           const location = await LocationLib.getCurrentPositionAsync({});
-          setLocation(location);
+
+          setLocation((prev) => {
+            if (isEqual(prev?.coords, location.coords)) {
+              return prev;
+            }
+            return location;
+          });
         }, 2000);
       } catch (error) {
         if (error instanceof Error) {
