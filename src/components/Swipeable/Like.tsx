@@ -1,11 +1,10 @@
-import React, { PropsWithChildren, useMemo, useRef } from "react";
-import { Animated, Text, StyleSheet } from "react-native";
+import React, { PropsWithChildren, useRef } from "react";
+import { Animated, Text } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useLikeContext } from "../../contexts/LikedContext";
 import { useSwipeable } from ".";
-import { ExtendedTheme } from "@constants/themes";
-import { useTheme } from "@react-navigation/native";
+import { createStyleSheet, useStylesWithTheme } from "@/src/stylesheet";
 
 type LikeProps = {
   id: number;
@@ -14,8 +13,8 @@ type LikeProps = {
 
 const Like = ({ progress, id }: LikeProps) => {
   const { isLiked, toggleLike } = useLikeContext();
-  const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme(stylesheet);
+
   const liked = isLiked(id);
 
   const trans = progress.interpolate({
@@ -51,16 +50,15 @@ const SwipeableLike = ({ id, children }: Props) => {
   );
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    button: {
-      borderRadius: 8,
-      flex: 1,
-      width: 70,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    text: { fontSize: 32, color: colors.text },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  button: {
+    borderRadius: 8,
+    flex: 1,
+    width: 70,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: { fontSize: 32, color: colors.text },
+}));
 
 export default SwipeableLike;

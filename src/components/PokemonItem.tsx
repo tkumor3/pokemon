@@ -1,9 +1,6 @@
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
 import PokemonType from "./PokemonType";
-import { useTheme } from "@react-navigation/native";
-import { ExtendedTheme } from "@constants/themes";
-import { useMemo } from "react";
 import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type PokemonItemProps = {

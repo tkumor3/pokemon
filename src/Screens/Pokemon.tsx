@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  ActivityIndicator,
-  Button,
-} from "react-native";
+import { View, Text, Pressable, ActivityIndicator, Button } from "react-native";
 import usePokemon from "../hooks/usePokemon";
 import { POKEMON_TYPE_COLORS } from "../constants";
 import Error from "@components/Error";
@@ -15,14 +8,13 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
 import capitalize from "lodash/capitalize";
 import { useTheme } from "@react-navigation/native";
-import { useMemo } from "react";
-import { ExtendedTheme } from "@constants/themes";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Pokemon">;
 
 const Pokemon = ({ route, navigation }: Props) => {
   const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme(stylesheet);
   const { name } = route.params;
 
   const { pokemon, loading, error } = usePokemon(name);
@@ -92,41 +84,40 @@ const Pokemon = ({ route, navigation }: Props) => {
   );
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    gap: { gap: 8 },
-    topContainer: {
-      flex: 2,
-      padding: 16,
-      justifyContent: "space-between",
-    },
-    boldText: { fontSize: 18, fontWeight: "bold", color: colors.colorRevert },
-    regularCapitalizeText: { fontSize: 16 },
-    header: { flexDirection: "row", justifyContent: "space-between" },
-    bottomContainer: {
-      flex: 3,
-      backgroundColor: colors.backgroundColor,
-      padding: 16,
-    },
-    container: { flex: 1 },
-    pressable: {
-      paddingVertical: 12,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 8,
-      backgroundColor: colors.buttonGrey,
-    },
-    title: {
-      textTransform: "capitalize",
-      color: colors.colorRevert,
-      fontWeight: "bold",
-      fontSize: 24,
-    },
-    imageContainer: {
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  gap: { gap: 8 },
+  topContainer: {
+    flex: 2,
+    padding: 16,
+    justifyContent: "space-between",
+  },
+  boldText: { fontSize: 18, fontWeight: "bold", color: colors.colorRevert },
+  regularCapitalizeText: { fontSize: 16 },
+  header: { flexDirection: "row", justifyContent: "space-between" },
+  bottomContainer: {
+    flex: 3,
+    backgroundColor: colors.backgroundColor,
+    padding: 16,
+  },
+  container: { flex: 1 },
+  pressable: {
+    paddingVertical: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    backgroundColor: colors.buttonGrey,
+  },
+  title: {
+    textTransform: "capitalize",
+    color: colors.colorRevert,
+    fontWeight: "bold",
+    fontSize: 24,
+  },
+  imageContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}));
 
 export default Pokemon;

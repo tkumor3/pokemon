@@ -1,7 +1,4 @@
-import { useStylesWithTheme } from "@/src/stylesheet";
-import { ExtendedTheme } from "@constants/themes";
-import { useTheme } from "@react-navigation/native";
-import { useMemo } from "react";
+import { createStyleSheet, useStylesWithTheme } from "@/src/stylesheet";
 import {
   ActivityIndicator,
   TextInput,

@@ -1,18 +1,15 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { RootStackParamList } from "./types";
 import usePokemon from "../hooks/usePokemon";
 import Error from "@components/Error";
 import ProgressBar from "@components/ProgressBar";
-import { ExtendedTheme } from "@constants/themes";
-import { useTheme } from "@react-navigation/native";
-import { useMemo } from "react";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type Props = NativeStackScreenProps<RootStackParamList, "StatisticsModal">;
 
 const StatisticsModal = ({ route }: Props) => {
-  const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme(stylesheet);
   const { name } = route.params;
   const { pokemon, loading, error } = usePokemon(name);
 
@@ -41,16 +38,15 @@ const StatisticsModal = ({ route }: Props) => {
   );
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.backgroundColor,
-      gap: 8,
-      padding: 16,
-    },
-    text: { color: colors.text },
-    statisticTop: { flexDirection: "row", justifyContent: "space-between" },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  container: {
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+    gap: 8,
+    padding: 16,
+  },
+  text: { color: colors.text },
+  statisticTop: { flexDirection: "row", justifyContent: "space-between" },
+}));
 
 export default StatisticsModal;

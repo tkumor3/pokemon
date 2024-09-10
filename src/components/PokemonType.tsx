@@ -1,11 +1,8 @@
-import { ExtendedTheme } from "@constants/themes";
-import { useTheme } from "@react-navigation/native";
-import { useMemo } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 const PokemonType = ({ type }: { type: string }) => {
-  const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme(stylesheet);
 
   return (
     <View style={[styles.container]}>
@@ -14,18 +11,17 @@ const PokemonType = ({ type }: { type: string }) => {
   );
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    container: {
-      borderRadius: 24,
-      paddingHorizontal: 12,
-      paddingVertical: 6,
-      backgroundColor: colors.backgroundOpacity,
-    },
-    text: {
-      color: colors.colorRevert,
-      fontSize: 12,
-    },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  container: {
+    borderRadius: 24,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: colors.backgroundOpacity,
+  },
+  text: {
+    color: colors.colorRevert,
+    fontSize: 12,
+  },
+}));
 
 export default PokemonType;

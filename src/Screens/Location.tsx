@@ -1,14 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
+import { useState, useEffect } from "react";
+import { Text, View, ActivityIndicator } from "react-native";
 import Map from "@components/Map/Map";
-
 import * as LocationLib from "expo-location";
-import { useTheme } from "@react-navigation/native";
-import { ExtendedTheme } from "@constants/themes";
+
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 const Location = () => {
-  const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme(stylesheet);
   const [status, setStatus] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,19 +31,18 @@ const Location = () => {
   return <Map />;
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 20,
-      backgroundColor: colors.backgroundColor,
-    },
-    paragraph: {
-      fontSize: 18,
-      textAlign: "center",
-    },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: colors.backgroundColor,
+  },
+  paragraph: {
+    fontSize: 18,
+    textAlign: "center",
+  },
+}));
 
 export default Location;

@@ -1,12 +1,12 @@
 import { ExtendedTheme } from "@constants/themes";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
 
 type Colors = ExtendedTheme["colors"];
 
-export const useStylesWithTheme = (
-  stylesheet: ReturnType<typeof createStyleSheet>
+export const useStylesWithTheme = <T extends StyleSheet.NamedStyles<T>>(
+  stylesheet: (colors: Colors) => T
 ) => {
   const { colors } = useTheme();
   const styles = useMemo(() => stylesheet(colors), [colors, stylesheet]);
@@ -18,9 +18,3 @@ export const createStyleSheet =
   (colors: Colors) => {
     return StyleSheet.create(fun(colors));
   };
-
-const a = createStyleSheet((c) => ({
-  test: {
-    color: c.backgroundColor,
-  },
-}));

@@ -6,7 +6,7 @@ import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 type Props = TabScreenProps<"Liked">;
 
 const Liked = ({ navigation }: Props) => {
-  const styles = useStylesWithTheme<typeof stylesheet>(stylesheet);
+  const styles = useStylesWithTheme(stylesheet);
 
   return (
     <SafeAreaView style={styles.container}>
