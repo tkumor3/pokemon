@@ -1,3 +1,4 @@
+import { createTheme } from "@fast-styles/react";
 import {
   Theme,
   DefaultTheme,
@@ -41,3 +42,23 @@ export const DarkTheme: ExtendedTheme = {
 declare module "@react-navigation/native" {
   export function useTheme(): ExtendedTheme;
 }
+
+export const lightTheme = createTheme({
+  colors: {
+    backgroundColor: "#fff",
+    color: "#000",
+    colorRevert: "#fff",
+    backgroundOpacity: "#ffffff4f",
+    buttonGrey: "#f0f0f0",
+  },
+});
+
+export const darkTheme = createTheme({
+  colors: {
+    backgroundColor: "#fff",
+    color: "#000",
+    colorRevert: "#fff",
+    backgroundOpacity: "#ffffff4f",
+    buttonGrey: "#f0f0f0",
+  },
+});

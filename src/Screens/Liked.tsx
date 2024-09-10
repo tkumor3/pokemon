@@ -1,16 +1,12 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TabScreenProps } from "./types";
-import { StyleSheet } from "react-native";
 import LikedPokemonList from "@components/LikedPokemonList";
-import { ExtendedTheme } from "@constants/themes";
-import { useMemo } from "react";
-import { useTheme } from "@react-navigation/native";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type Props = TabScreenProps<"Liked">;
 
 const Liked = ({ navigation }: Props) => {
-  const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme<typeof stylesheet>(stylesheet);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,8 +15,9 @@ const Liked = ({ navigation }: Props) => {
   );
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    container: { flex: 1, backgroundColor: colors.backgroundColor },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  container: { flex: 1, backgroundColor: colors.backgroundColor },
+  a: { color: colors.text },
+}));
+
 export default Liked;

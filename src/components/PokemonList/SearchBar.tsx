@@ -1,3 +1,4 @@
+import { useStylesWithTheme } from "@/src/stylesheet";
 import { ExtendedTheme } from "@constants/themes";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
@@ -24,8 +25,7 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
     top: -SEARCH_HEIGHT + searchBarVisiblePart.value * SEARCH_HEIGHT,
   }));
 
-  const { colors } = useTheme();
-  const styles = useMemo(() => genStyles(colors), [colors]);
+  const styles = useStylesWithTheme(stylesheet);
 
   return (
     <Animated.View style={[animatedStyle, styles.container]}>
@@ -43,39 +43,38 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
   );
 };
 
-const genStyles = (colors: ExtendedTheme["colors"]) =>
-  StyleSheet.create({
-    ListHeaderComponentStyle: {
-      position: "relative",
-      height: SEARCH_HEIGHT,
-    },
-    container: {
-      backgroundColor: colors.backgroundColor,
-      paddingVertical: 16,
-      position: "absolute",
-      left: 0,
-      right: 0,
-    },
-    searchWithIcon: { flex: 1, flexDirection: "row", gap: 4 },
-    textInput: {
-      flex: 1,
-      borderWidth: 1,
-      padding: 8,
-      borderRadius: 8,
-      borderColor: colors.border,
-      fontSize: 20,
-      color: colors.color,
-    },
-    iconContainer: {
-      height: 40,
-      width: 40,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    text: {
-      fontSize: 20,
-    },
-  });
+const stylesheet = createStyleSheet((colors) => ({
+  ListHeaderComponentStyle: {
+    position: "relative",
+    height: SEARCH_HEIGHT,
+  },
+  container: {
+    backgroundColor: colors.backgroundColor,
+    paddingVertical: 16,
+    position: "absolute",
+    left: 0,
+    right: 0,
+  },
+  searchWithIcon: { flex: 1, flexDirection: "row", gap: 4 },
+  textInput: {
+    flex: 1,
+    borderWidth: 1,
+    padding: 8,
+    borderRadius: 8,
+    borderColor: colors.border,
+    fontSize: 20,
+    color: colors.color,
+  },
+  iconContainer: {
+    height: 40,
+    width: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 20,
+  },
+}));
 
 const headerStyles = StyleSheet.create({
   ListHeaderComponentStyle: {
