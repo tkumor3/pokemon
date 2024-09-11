@@ -1,28 +1,22 @@
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+
+import Map from "@components/Map/Map";
+
 import useUserLocation from "../hooks/useUserLocation";
 
 const Location = () => {
-  const { location, errorMsg } = useUserLocation();
+  const { errorMsg } = useUserLocation();
   if (errorMsg) {
     return (
       <View style={styles.container}>
-        <Text style={styles.paragraph}>{errorMsg}</Text>
-      </View>
-    );
-  }
-  if (!location) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator />
+        <Text style={styles.paragraph}>
+          Permission to access location was denied
+        </Text>
       </View>
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>{JSON.stringify(location)}</Text>
-    </View>
-  );
+  return <Map />;
 };
 
 const styles = StyleSheet.create({
