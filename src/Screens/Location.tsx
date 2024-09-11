@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
+import { Text, View } from "react-native";
+
 import Map from "@components/Map/Map";
-import * as LocationLib from "expo-location";
+
+import useUserLocation from "../hooks/useUserLocation";
 
 import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 const Location = () => {
+  const { errorMsg } = useUserLocation();
   const styles = useStylesWithTheme(stylesheet);
-  const [status, setStatus] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await LocationLib.requestForegroundPermissionsAsync();
-      setStatus(status);
-    })();
-  }, []);
-
-  if (status === null) return <ActivityIndicator />;
-
-  if (status !== "granted") {
+  if (errorMsg) {
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>
-          {"Permission to access location was denied"}
+          Permission to access location was denied
         </Text>
       </View>
     );
