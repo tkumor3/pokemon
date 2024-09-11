@@ -1,3 +1,4 @@
+import { createStyleSheet, useStylesWithTheme } from "@/src/stylesheet";
 import {
   ActivityIndicator,
   TextInput,
@@ -21,6 +22,8 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
     top: -SEARCH_HEIGHT + searchBarVisiblePart.value * SEARCH_HEIGHT,
   }));
 
+  const styles = useStylesWithTheme(stylesheet);
+
   return (
     <Animated.View style={[animatedStyle, styles.container]}>
       <View style={styles.searchWithIcon}>
@@ -37,13 +40,13 @@ const SearchBar = ({ searchBarVisiblePart, onChange, loading }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((colors) => ({
   ListHeaderComponentStyle: {
     position: "relative",
     height: SEARCH_HEIGHT,
   },
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.backgroundColor,
     paddingVertical: 16,
     position: "absolute",
     left: 0,
@@ -55,8 +58,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 8,
     borderRadius: 8,
-    borderColor: "#d3d3d3",
+    borderColor: colors.border,
     fontSize: 20,
+    color: colors.color,
   },
   iconContainer: {
     height: 40,
@@ -67,8 +71,15 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
+}));
+
+const headerStyles = StyleSheet.create({
+  ListHeaderComponentStyle: {
+    position: "relative",
+    height: SEARCH_HEIGHT,
+  },
 });
 
-SearchBar.ContainerStyle = styles.ListHeaderComponentStyle;
+SearchBar.ContainerStyle = headerStyles.ListHeaderComponentStyle;
 
 export default SearchBar;

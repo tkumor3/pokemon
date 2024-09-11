@@ -22,6 +22,8 @@ import { getHeaderTitle } from "./Screens/utils";
 import capitalize from "lodash/capitalize";
 import StatisticsModal from "./Screens/StatisticsModal";
 import Location from "./Screens/Location";
+import { useColorScheme } from "react-native";
+import { LightTheme, DarkTheme } from "@constants/themes";
 
 const link = from([
   new RetryLink({
@@ -54,13 +56,17 @@ const client = new ApolloClient({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
+  const scheme = useColorScheme();
+
   return (
     <ApolloProvider client={client}>
       <GestureHandlerRootView>
         <LikeContextProvider>
           <SafeAreaProvider>
             <NoConnection />
-            <NavigationContainer>
+            <NavigationContainer
+              theme={scheme === "dark" ? DarkTheme : LightTheme}
+            >
               <Stack.Navigator initialRouteName="PokemonListTab">
                 <Stack.Group>
                   <Stack.Screen

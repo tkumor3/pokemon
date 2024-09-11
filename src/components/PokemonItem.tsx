@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { POKEMON_TYPE_COLORS, PokemonTypes } from "@/src/constants";
 import PokemonType from "./PokemonType";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type PokemonItemProps = {
   imageUri: string;
@@ -15,6 +16,8 @@ const PokemonItem = ({
   types,
   navigateToPokemon,
 }: PokemonItemProps) => {
+  const styles = useStylesWithTheme(stylesheet);
+
   return (
     <Pressable
       onPress={() => navigateToPokemon(shortName)}
@@ -42,24 +45,24 @@ const PokemonItem = ({
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((colors) => ({
   pokemonItem: {
     flex: 1,
     padding: 14,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#ffffff4f",
+    borderColor: colors.backgroundOpacity,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   tagsContainer: { flexDirection: "row", gap: 8 },
   gap: { gap: 8 },
   title: {
-    color: "#fff",
+    color: colors.colorRevert,
     fontSize: 20,
     fontWeight: "bold",
     textTransform: "capitalize",
   },
-});
+}));
 
 export default PokemonItem;

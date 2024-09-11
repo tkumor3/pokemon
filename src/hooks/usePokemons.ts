@@ -32,6 +32,7 @@ const usePokemons = (searchQuery?: string) => {
       },
     }
   );
+  console.log(data, error);
 
   const pokemonIndex =
     data?.pokemon_v2_pokemon.map(parsePokemon) ??

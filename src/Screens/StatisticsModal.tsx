@@ -1,13 +1,15 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { RootStackParamList } from "./types";
 import usePokemon from "../hooks/usePokemon";
 import Error from "@components/Error";
 import ProgressBar from "@components/ProgressBar";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type Props = NativeStackScreenProps<RootStackParamList, "StatisticsModal">;
 
 const StatisticsModal = ({ route }: Props) => {
+  const styles = useStylesWithTheme(stylesheet);
   const { name } = route.params;
   const { pokemon, loading, error } = usePokemon(name);
 
@@ -25,8 +27,8 @@ const StatisticsModal = ({ route }: Props) => {
         return (
           <View key={statistic.name}>
             <View style={styles.statisticTop}>
-              <Text>{statistic.name}</Text>
-              <Text>{statistic.value}</Text>
+              <Text style={styles.text}>{statistic.name}</Text>
+              <Text style={styles.text}>{statistic.value}</Text>
             </View>
             <ProgressBar progress={statistic.value} />
           </View>
@@ -36,9 +38,15 @@ const StatisticsModal = ({ route }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", gap: 8, padding: 16 },
+const stylesheet = createStyleSheet((colors) => ({
+  container: {
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+    gap: 8,
+    padding: 16,
+  },
+  text: { color: colors.text },
   statisticTop: { flexDirection: "row", justifyContent: "space-between" },
-});
+}));
 
 export default StatisticsModal;

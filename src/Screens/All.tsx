@@ -1,11 +1,14 @@
 import React from "react";
-import { View, StyleSheet, Image, SafeAreaView } from "react-native";
+import { View, Image, SafeAreaView } from "react-native";
 import { TabScreenProps } from "./types";
 import SearchPokemonList from "@components/SearchPokemonList";
+import { createStyleSheet, useStylesWithTheme } from "../stylesheet";
 
 type Props = TabScreenProps<"All">;
 
 const All = ({ navigation }: Props) => {
+  const styles = useStylesWithTheme(stylesheet);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -20,7 +23,7 @@ const All = ({ navigation }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((colors) => ({
   logoImage: { flex: 1, height: "100%" },
   logoContainer: {
     height: 100,
@@ -31,8 +34,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.backgroundColor,
   },
-});
+}));
 
 export default All;

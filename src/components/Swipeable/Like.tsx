@@ -1,9 +1,10 @@
 import React, { PropsWithChildren, useRef } from "react";
-import { Animated, Text, StyleSheet } from "react-native";
+import { Animated, Text } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useLikeContext } from "../../contexts/LikedContext";
 import { useSwipeable } from ".";
+import { createStyleSheet, useStylesWithTheme } from "@/src/stylesheet";
 
 type LikeProps = {
   id: number;
@@ -12,6 +13,8 @@ type LikeProps = {
 
 const Like = ({ progress, id }: LikeProps) => {
   const { isLiked, toggleLike } = useLikeContext();
+  const styles = useStylesWithTheme(stylesheet);
+
   const liked = isLiked(id);
 
   const trans = progress.interpolate({
@@ -47,7 +50,7 @@ const SwipeableLike = ({ id, children }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((colors) => ({
   button: {
     borderRadius: 8,
     flex: 1,
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  text: { fontSize: 32 },
-});
+  text: { fontSize: 32, color: colors.text },
+}));
 
 export default SwipeableLike;
