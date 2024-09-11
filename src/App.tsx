@@ -21,6 +21,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getHeaderTitle } from "./Screens/utils";
 import capitalize from "lodash/capitalize";
 import StatisticsModal from "./Screens/StatisticsModal";
+import Location from "./Screens/Location";
 
 const link = from([
   new RetryLink({
@@ -76,6 +77,11 @@ function App() {
                     options={({ route }) => ({
                       title: capitalize(route.params.name),
                     })}
+                  />
+                  <Stack.Screen
+                    name="Location"
+                    component={Location}
+                    options={{ title: "Location" }}
                   />
                 </Stack.Group>
                 <Stack.Group screenOptions={{ presentation: "modal" }}>
