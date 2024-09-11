@@ -1,57 +1,34 @@
-import { StyleSheet, LayoutChangeEvent } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+import { LayoutChangeEvent } from "react-native";
+import { GestureDetector } from "react-native-gesture-handler";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import { useState } from "react";
+import { PICKER_WIDTH } from "./constants";
+import useSliderPan from "./hooks/useSliderPan";
+import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
+import useComputeValue from "./hooks/useComputeValue";
 
-import { useCallback, useMemo, useState } from "react";
-import throttle from "lodash/throttle";
-
-const PICKER_WIDTH = 26;
-
-type Props = { minimalValue: number; maximalValue: number; value?: number };
-
-function clamp(val: number, min: number, max: number) {
-  return Math.min(Math.max(val, min), max);
-}
-
-const computeChosenValue = (
-  value: number,
-  minimalValue: number,
-  maximalValue: number,
-  sliderWidth: number
-) => {
-  return clamp(
-    minimalValue +
-      Math.ceil(
-        (value / (sliderWidth - PICKER_WIDTH)) * (maximalValue - minimalValue)
-      ),
-    minimalValue,
-    maximalValue
-  );
+type Props = {
+  minimalValue: number;
+  maximalValue: number;
+  value: number;
+  onChange: (value: number) => void;
 };
 
-const computePointerPosition = (position: number, sliderWidth: number) =>
-  clamp(position, PICKER_WIDTH / 2, sliderWidth - PICKER_WIDTH / 2) -
-  PICKER_WIDTH / 2;
-
-const Slider = ({ minimalValue, maximalValue }: Props) => {
+const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
+  const styles = useStylesWithTheme(stylesheet);
   const [sliderWidth, setSliderWidth] = useState(0);
-  const [selectedValue, _setSelectedValue] = useState(minimalValue);
-  const setSelectedValue = useMemo(() => throttle(_setSelectedValue, 200), []);
-  const pickerPosition = useSharedValue(0);
+  const { computeSelectedValue } = useComputeValue({
+    minimalValue,
+    maximalValue,
+    sliderWidth,
+    onChange,
+  });
 
-  const computeSelectedValue = useCallback(
-    (progress: number) => {
-      setSelectedValue(
-        computeChosenValue(progress, minimalValue, maximalValue, sliderWidth)
-      );
-    },
-    [minimalValue, maximalValue, sliderWidth, setSelectedValue]
-  );
+  const { panGesture, pickerPosition } = useSliderPan({
+    sliderWidth,
+    computeSelectedValue,
+    initialValue: value,
+  });
 
   const progressStyle = useAnimatedStyle(() => ({
     width: pickerPosition.value + PICKER_WIDTH,
@@ -61,75 +38,44 @@ const Slider = ({ minimalValue, maximalValue }: Props) => {
     left: pickerPosition.value,
   }));
 
-  const flingGesture = useMemo(() => {
-    return Gesture.Pan()
-      .minDistance(2)
-      .onTouchesDown((e) => {
-        const pointerPosition = computePointerPosition(
-          e.allTouches[0].x,
-          sliderWidth
-        );
-        computeSelectedValue(pointerPosition);
-        pickerPosition.value = withTiming(pointerPosition, {
-          duration: 100,
-          easing: Easing.linear,
-        });
-      })
-      .onUpdate((e) => {
-        {
-          const selectorPosition = computePointerPosition(e.x, sliderWidth);
-
-          computeSelectedValue(selectorPosition);
-          pickerPosition.value = withTiming(selectorPosition, {
-            duration: 100,
-            easing: Easing.linear,
-          });
-        }
-      })
-      .runOnJS(true);
-  }, [sliderWidth, computeSelectedValue, pickerPosition]);
-
   const onLayout = (e: LayoutChangeEvent) => {
     setSliderWidth(e.nativeEvent.layout.width);
   };
 
   return (
-    <GestureDetector gesture={flingGesture}>
-      <Animated.View
-        style={{
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <GestureDetector gesture={panGesture}>
+      <Animated.View style={styles.container}>
         <Animated.View style={styles.header}>
-          <Animated.Text>{minimalValue}</Animated.Text>
-          <Animated.Text>{maximalValue}</Animated.Text>
+          <Animated.Text style={styles.text}>{minimalValue}</Animated.Text>
+          <Animated.Text style={styles.text}>{maximalValue}</Animated.Text>
         </Animated.View>
-        <Animated.View style={styles.container} onLayout={onLayout}>
+        <Animated.View style={styles.sliderContainer} onLayout={onLayout}>
           <Animated.View style={[styles.picker, pickerPositionStyle]} />
           <Animated.View style={styles.bar}>
             <Animated.View style={[styles.progressBar, progressStyle]} />
           </Animated.View>
         </Animated.View>
-        <Animated.View
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <Animated.Text>{selectedValue}</Animated.Text>
+        <Animated.View style={styles.counterContainer}>
+          <Animated.Text style={styles.text}>{value}</Animated.Text>
         </Animated.View>
       </Animated.View>
     </GestureDetector>
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((colors) => ({
+  container: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   header: {
     height: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
   },
-  container: {
+  sliderContainer: {
     position: "relative",
     paddingVertical: 20,
     width: "100%",
@@ -157,6 +103,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
     borderRadius: PICKER_WIDTH,
   },
-});
+  counterContainer: { justifyContent: "center", alignItems: "center" },
+  text: { color: colors.text },
+}));
 
 export default Slider;

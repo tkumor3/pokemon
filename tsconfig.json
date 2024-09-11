@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
+      "@stylesheet": ["src/stylesheet"],
       "@constants/*": ["src/constants/*"],
       "@/*": [
         "*"
