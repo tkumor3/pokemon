@@ -42,3 +42,4 @@ jobs: # list of things to do
       - run: npm ci
       - name: Checking TypeScript
         run: npm run tsc
+        
