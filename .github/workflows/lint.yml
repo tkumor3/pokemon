@@ -1,0 +1,29 @@
+name: Lint # name of the action (displayed in the github interface)
+
+on: push
+
+jobs: # list of things to do
+  linting:
+    name: Linting # job name (unique id)
+    runs-on: ubuntu-latest # on which machine to run
+    steps: # list of steps
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - name: Running ESLint
+        run: npm run lint
+  check_tsc:
+    name: Check TypeScript # job name (unique id)
+    runs-on: ubuntu-latest # on which machine to run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - name: Checking TypeScript
+        run: npm run tsc
