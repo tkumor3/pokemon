@@ -5,11 +5,11 @@ export type Pokemon = {
   name: string;
   imageUri: string;
   types: PokemonTypes[];
-  evolutions:
+  evolutions?:
     | {
         id: number;
         name: string;
       }[]
     | undefined;
-  statistics: { name: string; value: number }[] | undefined;
+  statistics?: { name: string; value: number }[] | undefined;
 };
