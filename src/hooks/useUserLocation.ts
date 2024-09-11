@@ -17,19 +17,21 @@ const useUserLocation = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
+    const setCurrentLocation = async () => {
+      const location = await LocationLib.getCurrentPositionAsync();
+
+      setLocation((prev) => {
+        if (isEqual(prev?.coords, location.coords)) {
+          return prev;
+        }
+        return location;
+      });
+    };
+
     (async () => {
       try {
         await requestLocationPermission();
-        intervalRef.current = setInterval(async () => {
-          const location = await LocationLib.getCurrentPositionAsync({});
-
-          setLocation((prev) => {
-            if (isEqual(prev?.coords, location.coords)) {
-              return prev;
-            }
-            return location;
-          });
-        }, 2000);
+        intervalRef.current = setInterval(setCurrentLocation, 2000);
       } catch (error) {
         if (error instanceof Error) {
           setErrorMsg(error.message);
