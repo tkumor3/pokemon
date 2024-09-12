@@ -1,6 +1,7 @@
 import { PICKER_SIZE } from ".";
 
 export const clamp = (val: number, min: number, max: number) => {
+  "worklet";
   return Math.min(Math.max(val, min), max);
 };
 
@@ -20,6 +21,14 @@ export const computeChosenValue = (
   );
 };
 
-export const computePointerPosition = (position: number, sliderWidth: number) =>
-  clamp(position, PICKER_SIZE / 2, sliderWidth - PICKER_SIZE / 2) -
-  PICKER_SIZE / 2;
+export const computePointerPosition = (
+  position: number,
+  sliderWidth: number,
+  pickerSize: number
+) => {
+  "worklet";
+  return (
+    clamp(position, pickerSize / 2, sliderWidth - pickerSize / 2) -
+    pickerSize / 2
+  );
+};

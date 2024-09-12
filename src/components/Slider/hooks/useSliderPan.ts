@@ -2,17 +2,18 @@ import { useMemo } from "react";
 import { Gesture } from "react-native-gesture-handler";
 import { computePointerPosition } from "../utils";
 import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+import { PICKER_SIZE } from "..";
 
 type Params = {
   sliderWidth: number;
   initialValue: number;
-  computeSelectedValue: (progress: number) => void;
+  onChangePickerValue: (progress: number) => void;
 };
 
 const useSliderPan = ({
   sliderWidth,
   initialValue,
-  computeSelectedValue,
+  onChangePickerValue,
 }: Params) => {
   const pickerPosition = useSharedValue(initialValue);
 
@@ -22,23 +23,30 @@ const useSliderPan = ({
       .onTouchesDown((e) => {
         const pointerPosition = computePointerPosition(
           e.allTouches[0].x,
-          sliderWidth
+          sliderWidth,
+          PICKER_SIZE
         );
-        computeSelectedValue(pointerPosition);
+
+        // onChangePickerValue(pointerPosition);
+
         pickerPosition.value = withTiming(pointerPosition, {
-          duration: 20,
+          duration: 100,
           easing: Easing.linear,
         });
       })
       .onUpdate((e) => {
         {
-          const selectorPosition = computePointerPosition(e.x, sliderWidth);
-          computeSelectedValue(selectorPosition);
+          const selectorPosition = computePointerPosition(
+            e.x,
+            sliderWidth,
+            PICKER_SIZE
+          );
+          // onChangePickerValue(selectorPosition);
+
           pickerPosition.value = selectorPosition;
         }
-      })
-      .runOnJS(true);
-  }, [sliderWidth, pickerPosition, computeSelectedValue]);
+      });
+  }, [sliderWidth, pickerPosition]);
 
   return { panGesture, pickerPosition };
 };
