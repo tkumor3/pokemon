@@ -19,7 +19,7 @@ type Props = {
 const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
   const styles = useStylesWithTheme(stylesheet);
   const [sliderWidth, setSliderWidth] = useState(0);
-  const { computeSelectedValue } = useComputeValue({
+  const { onChangePickerValue } = useComputeValue({
     minimalValue,
     maximalValue,
     sliderWidth,
@@ -28,8 +28,8 @@ const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
 
   const { panGesture, pickerPosition } = useSliderPan({
     sliderWidth,
-    computeSelectedValue,
     initialValue: value,
+    onChangePickerValue,
   });
 
   const progressStyle = useAnimatedStyle(() => ({

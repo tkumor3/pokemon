@@ -1,7 +1,12 @@
 import { useMemo } from "react";
 import { Gesture } from "react-native-gesture-handler";
 import { computePointerPosition } from "../utils";
-import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+import {
+  Easing,
+  runOnJS,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { PICKER_SIZE } from "..";
 
 type Params = {
@@ -27,7 +32,7 @@ const useSliderPan = ({
           PICKER_SIZE
         );
 
-        // onChangePickerValue(pointerPosition);
+        runOnJS(onChangePickerValue)(pointerPosition);
 
         pickerPosition.value = withTiming(pointerPosition, {
           duration: 100,
@@ -41,12 +46,12 @@ const useSliderPan = ({
             sliderWidth,
             PICKER_SIZE
           );
-          // onChangePickerValue(selectorPosition);
+          runOnJS(onChangePickerValue)(selectorPosition);
 
           pickerPosition.value = selectorPosition;
         }
       });
-  }, [sliderWidth, pickerPosition]);
+  }, [sliderWidth, pickerPosition, onChangePickerValue]);
 
   return { panGesture, pickerPosition };
 };

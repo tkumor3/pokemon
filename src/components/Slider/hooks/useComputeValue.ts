@@ -13,8 +13,8 @@ const useComputeValue = ({
   sliderWidth,
   onChange,
 }: Params) => {
-  const computeSelectedValue = useCallback(
-    (progress: number) => {
+  const onChangePickerValue = useCallback(
+    async (progress: number) => {
       onChange(
         computeChosenValue(progress, minimalValue, maximalValue, sliderWidth)
       );
@@ -22,7 +22,7 @@ const useComputeValue = ({
     [minimalValue, maximalValue, sliderWidth, onChange]
   );
 
-  return { computeSelectedValue };
+  return { onChangePickerValue };
 };
 
 export default useComputeValue;
