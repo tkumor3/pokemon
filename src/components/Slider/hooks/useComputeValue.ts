@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { computeChosenValue } from "../utils";
+import computePickerValue from "../utils/computePickerValue";
 
 type Params = {
   minimalValue: number;
@@ -16,7 +16,7 @@ const useComputeValue = ({
   const onChangePickerValue = useCallback(
     async (progress: number) => {
       onChange(
-        computeChosenValue(progress, minimalValue, maximalValue, sliderWidth)
+        computePickerValue(progress, minimalValue, maximalValue, sliderWidth)
       );
     },
     [minimalValue, maximalValue, sliderWidth, onChange]

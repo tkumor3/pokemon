@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Gesture } from "react-native-gesture-handler";
-import { computePointerPosition } from "../utils";
+import { computePointerPosition } from "../utils/worklets";
 import {
   Easing,
   runOnJS,
