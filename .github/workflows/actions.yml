@@ -1,12 +1,12 @@
-name: Actions # name of the action (displayed in the github interface)
+name: Actions
 
 on: push
 
-jobs: # list of things to do
+jobs:
   linting:
-    name: Linting # job name (unique id)
-    runs-on: ubuntu-latest # on which machine to run
-    steps: # list of steps
+    name: Run linter
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -16,8 +16,8 @@ jobs: # list of things to do
       - name: Running ESLint
         run: npm run lint
   check_tsc:
-    name: Check TypeScript # job name (unique id)
-    runs-on: ubuntu-latest # on which machine to run
+    name: Check TypeScript
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
