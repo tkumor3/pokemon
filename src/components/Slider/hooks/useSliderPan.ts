@@ -24,6 +24,7 @@ const useSliderPan = ({
           e.allTouches[0].x,
           sliderWidth
         );
+        computeSelectedValue(pointerPosition);
         pickerPosition.value = withTiming(pointerPosition, {
           duration: 20,
           easing: Easing.linear,
@@ -32,11 +33,12 @@ const useSliderPan = ({
       .onUpdate((e) => {
         {
           const selectorPosition = computePointerPosition(e.x, sliderWidth);
+          computeSelectedValue(selectorPosition);
           pickerPosition.value = selectorPosition;
         }
       })
       .runOnJS(true);
-  }, [sliderWidth, pickerPosition]);
+  }, [sliderWidth, pickerPosition, computeSelectedValue]);
 
   return { panGesture, pickerPosition };
 };

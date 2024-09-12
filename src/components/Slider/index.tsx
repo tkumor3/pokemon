@@ -2,11 +2,12 @@ import { LayoutChangeEvent } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { useState } from "react";
-import { PICKER_WIDTH } from "./constants";
 import useSliderPan from "./hooks/useSliderPan";
 import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
 import useComputeValue from "./hooks/useComputeValue";
 import { View, Text } from "react-native";
+
+export const PICKER_SIZE = 23;
 
 type Props = {
   minimalValue: number;
@@ -32,7 +33,7 @@ const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
   });
 
   const progressStyle = useAnimatedStyle(() => ({
-    width: pickerPosition.value + PICKER_WIDTH,
+    width: pickerPosition.value + PICKER_SIZE,
   }));
 
   const pickerPositionStyle = useAnimatedStyle(() => ({
@@ -81,16 +82,16 @@ const stylesheet = createStyleSheet((colors) => ({
   sliderContainer: {
     position: "relative",
     width: "100%",
-    height: PICKER_WIDTH,
+    height: PICKER_SIZE,
     justifyContent: "center",
     marginVertical: 10,
   },
   picker: {
     position: "absolute",
     bottom: 0,
-    height: PICKER_WIDTH,
-    width: PICKER_WIDTH,
-    borderRadius: PICKER_WIDTH,
+    height: PICKER_SIZE,
+    width: PICKER_SIZE,
+    borderRadius: PICKER_SIZE,
     backgroundColor: "#fff",
     zIndex: 1,
     borderColor: "#b4b4b4",
@@ -98,18 +99,17 @@ const stylesheet = createStyleSheet((colors) => ({
     borderWidth: 1,
   },
   bar: {
-    height: 13,
+    height: PICKER_SIZE - 2,
     width: "100%",
     backgroundColor: "#e0e0e0",
-    borderRadius: 5,
+    borderRadius: PICKER_SIZE,
     overflow: "hidden",
   },
   progressBar: {
     height: "100%",
     backgroundColor: "#48CFB2",
-    width: "80%",
-    zIndex: 10,
-    borderRadius: PICKER_WIDTH,
+    zIndex: 1,
+    borderRadius: PICKER_SIZE,
   },
   counterContainer: { justifyContent: "center", alignItems: "center" },
   text: { color: colors.text },

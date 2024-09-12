@@ -1,8 +1,10 @@
 import Slider from "@components/Slider";
+import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 
 const SliderScreen = () => {
+  const styles = useStylesWithTheme(stylesheet);
   const [slider1, setSlider1] = useState(20);
   const [slider2, setSlider2] = useState(50);
   const [slider3, setSlider3] = useState(30);
@@ -30,14 +32,15 @@ const SliderScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((colors) => ({
   container: {
     gap: 20,
     padding: 16,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: colors.backgroundColor,
   },
-});
+}));
 
 export default SliderScreen;
