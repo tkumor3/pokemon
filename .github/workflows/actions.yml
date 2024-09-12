@@ -1,0 +1,29 @@
+name: Actions
+
+on: push
+
+jobs:
+  linting:
+    name: Run linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - name: Running ESLint
+        run: npm run lint
+  check_tsc:
+    name: Check TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - name: Checking TypeScript
+        run: npm run tsc
