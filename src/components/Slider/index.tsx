@@ -6,6 +6,7 @@ import { PICKER_WIDTH } from "./constants";
 import useSliderPan from "./hooks/useSliderPan";
 import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
 import useComputeValue from "./hooks/useComputeValue";
+import { View, Text } from "react-native";
 
 type Props = {
   minimalValue: number;
@@ -79,20 +80,25 @@ const stylesheet = createStyleSheet((colors) => ({
   },
   sliderContainer: {
     position: "relative",
-    paddingVertical: 20,
     width: "100%",
+    height: PICKER_WIDTH,
+    justifyContent: "center",
+    marginVertical: 10,
   },
   picker: {
     position: "absolute",
-    top: 14,
+    bottom: 0,
     height: PICKER_WIDTH,
     width: PICKER_WIDTH,
     borderRadius: PICKER_WIDTH,
     backgroundColor: "#fff",
     zIndex: 1,
+    borderColor: "#b4b4b4",
+    borderOpacity: 0.2,
+    borderWidth: 1,
   },
   bar: {
-    height: 5,
+    height: 13,
     width: "100%",
     backgroundColor: "#e0e0e0",
     borderRadius: 5,
@@ -109,7 +115,7 @@ const stylesheet = createStyleSheet((colors) => ({
   text: { color: colors.text },
   shadow: {
     shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 4 },
+    shadowOffset: { width: -2, height: 0 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },

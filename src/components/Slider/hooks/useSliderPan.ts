@@ -24,24 +24,19 @@ const useSliderPan = ({
           e.allTouches[0].x,
           sliderWidth
         );
-        computeSelectedValue(pointerPosition);
         pickerPosition.value = withTiming(pointerPosition, {
-          duration: 100,
+          duration: 20,
           easing: Easing.linear,
         });
       })
       .onUpdate((e) => {
         {
           const selectorPosition = computePointerPosition(e.x, sliderWidth);
-          computeSelectedValue(selectorPosition);
-          pickerPosition.value = withTiming(selectorPosition, {
-            duration: 20,
-            easing: Easing.linear,
-          });
+          pickerPosition.value = selectorPosition;
         }
       })
       .runOnJS(true);
-  }, [sliderWidth, computeSelectedValue, pickerPosition]);
+  }, [sliderWidth, pickerPosition]);
 
   return { panGesture, pickerPosition };
 };
