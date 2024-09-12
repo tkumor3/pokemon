@@ -1,13 +1,15 @@
 import Slider from "@components/Slider";
 import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
-import { useState } from "react";
+import throttle from "lodash/throttle";
+import { useMemo, useState } from "react";
 import { View } from "react-native";
 
 const SliderScreen = () => {
   const styles = useStylesWithTheme(stylesheet);
   const [slider1, setSlider1] = useState(20);
-  const [slider2, setSlider2] = useState(50);
+  const [slider2, _setSlider2] = useState(50);
   const [slider3, setSlider3] = useState(30);
+  const setSlider2 = useMemo(() => throttle(_setSlider2, 200), []);
   return (
     <View style={styles.container}>
       <Slider
