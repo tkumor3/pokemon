@@ -44,21 +44,23 @@ const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
 
   return (
     <GestureDetector gesture={panGesture}>
-      <Animated.View style={styles.container}>
-        <Animated.View style={styles.header}>
-          <Animated.Text style={styles.text}>{minimalValue}</Animated.Text>
-          <Animated.Text style={styles.text}>{maximalValue}</Animated.Text>
-        </Animated.View>
-        <Animated.View style={styles.sliderContainer} onLayout={onLayout}>
-          <Animated.View style={[styles.picker, pickerPositionStyle]} />
-          <Animated.View style={styles.bar}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.text}>{minimalValue}</Text>
+          <Text style={styles.text}>{maximalValue}</Text>
+        </View>
+        <View style={styles.sliderContainer} onLayout={onLayout}>
+          <Animated.View
+            style={[styles.picker, styles.shadow, pickerPositionStyle]}
+          />
+          <View style={styles.bar}>
             <Animated.View style={[styles.progressBar, progressStyle]} />
-          </Animated.View>
-        </Animated.View>
-        <Animated.View style={styles.counterContainer}>
-          <Animated.Text style={styles.text}>{value}</Animated.Text>
-        </Animated.View>
-      </Animated.View>
+          </View>
+        </View>
+        <View style={styles.counterContainer}>
+          <Text style={styles.text}>{value}</Text>
+        </View>
+      </View>
     </GestureDetector>
   );
 };
@@ -82,29 +84,35 @@ const stylesheet = createStyleSheet((colors) => ({
   },
   picker: {
     position: "absolute",
-    top: 17,
-    height: 26,
+    top: 14,
+    height: PICKER_WIDTH,
     width: PICKER_WIDTH,
     borderRadius: PICKER_WIDTH,
-    backgroundColor: "blue",
+    backgroundColor: "#fff",
     zIndex: 1,
   },
   bar: {
-    height: 20,
+    height: 5,
     width: "100%",
     backgroundColor: "#e0e0e0",
-    borderRadius: 10,
+    borderRadius: 5,
     overflow: "hidden",
   },
   progressBar: {
     height: "100%",
-    backgroundColor: "red",
+    backgroundColor: "#48CFB2",
     width: "80%",
     zIndex: 10,
     borderRadius: PICKER_WIDTH,
   },
   counterContainer: { justifyContent: "center", alignItems: "center" },
   text: { color: colors.text },
+  shadow: {
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
 }));
 
 export default Slider;

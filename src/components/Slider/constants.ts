@@ -1,1 +1,1 @@
-export const PICKER_WIDTH = 26;
+export const PICKER_WIDTH = 15;

@@ -1,6 +1,5 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { computeChosenValue } from "../utils";
-import throttle from "lodash/throttle";
 
 type Params = {
   minimalValue: number;
@@ -14,17 +13,13 @@ const useComputeValue = ({
   sliderWidth,
   onChange,
 }: Params) => {
-  const _computeSelectedValue = useCallback(
+  const computeSelectedValue = useCallback(
     (progress: number) => {
       onChange(
         computeChosenValue(progress, minimalValue, maximalValue, sliderWidth)
       );
     },
     [minimalValue, maximalValue, sliderWidth, onChange]
-  );
-  const computeSelectedValue = useMemo(
-    () => throttle(_computeSelectedValue, 200),
-    [_computeSelectedValue]
   );
 
   return { computeSelectedValue };

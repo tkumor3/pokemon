@@ -33,10 +33,9 @@ const useSliderPan = ({
       .onUpdate((e) => {
         {
           const selectorPosition = computePointerPosition(e.x, sliderWidth);
-
           computeSelectedValue(selectorPosition);
           pickerPosition.value = withTiming(selectorPosition, {
-            duration: 100,
+            duration: 20,
             easing: Easing.linear,
           });
         }
