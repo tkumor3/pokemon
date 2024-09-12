@@ -5,7 +5,7 @@ const clamp = (val: number, min: number, max: number) => {
 };
 
 const computePickerValue = (
-  value: number,
+  position: number,
   minimalValue: number,
   maximalValue: number,
   sliderWidth: number
@@ -13,7 +13,7 @@ const computePickerValue = (
   return clamp(
     minimalValue +
       Math.ceil(
-        (value / (sliderWidth - PICKER_SIZE)) * (maximalValue - minimalValue)
+        (position / (sliderWidth - PICKER_SIZE)) * (maximalValue - minimalValue)
       ),
     minimalValue,
     maximalValue

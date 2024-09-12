@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Gesture } from "react-native-gesture-handler";
-import { computePointerPosition } from "../utils/worklets";
+import { computePickerPosition } from "../utils/worklets";
 import {
   Easing,
   runOnJS,
@@ -12,46 +12,46 @@ import { PICKER_SIZE } from "..";
 type Params = {
   sliderWidth: number;
   initialValue: number;
-  onChangePickerValue: (progress: number) => void;
+  onPickerValueChange: (progress: number) => void;
 };
 
 const useSliderPan = ({
   sliderWidth,
   initialValue,
-  onChangePickerValue,
+  onPickerValueChange,
 }: Params) => {
   const pickerPosition = useSharedValue(initialValue);
 
   const panGesture = useMemo(() => {
     return Gesture.Pan()
-      .minDistance(2)
+      .minDistance(1)
       .onTouchesDown((e) => {
-        const pointerPosition = computePointerPosition(
+        const pickerPositionValue = computePickerPosition(
           e.allTouches[0].x,
           sliderWidth,
           PICKER_SIZE
         );
 
-        runOnJS(onChangePickerValue)(pointerPosition);
+        runOnJS(onPickerValueChange)(pickerPositionValue);
 
-        pickerPosition.value = withTiming(pointerPosition, {
+        pickerPosition.value = withTiming(pickerPositionValue, {
           duration: 100,
           easing: Easing.linear,
         });
       })
       .onUpdate((e) => {
         {
-          const selectorPosition = computePointerPosition(
+          const pickerPositionValue = computePickerPosition(
             e.x,
             sliderWidth,
             PICKER_SIZE
           );
-          runOnJS(onChangePickerValue)(selectorPosition);
+          runOnJS(onPickerValueChange)(pickerPositionValue);
 
-          pickerPosition.value = selectorPosition;
+          pickerPosition.value = pickerPositionValue;
         }
       });
-  }, [sliderWidth, pickerPosition, onChangePickerValue]);
+  }, [sliderWidth, pickerPosition, onPickerValueChange]);
 
   return { panGesture, pickerPosition };
 };

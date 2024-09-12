@@ -1,11 +1,11 @@
 import { LayoutChangeEvent } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useSliderPan from "./hooks/useSliderPan";
 import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
-import useComputeValue from "./hooks/useComputeValue";
 import { View, Text } from "react-native";
+import computePickerValue from "./utils/computePickerValue";
 
 export const PICKER_SIZE = 23;
 
@@ -19,17 +19,20 @@ type Props = {
 const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
   const styles = useStylesWithTheme(stylesheet);
   const [sliderWidth, setSliderWidth] = useState(0);
-  const { onChangePickerValue } = useComputeValue({
-    minimalValue,
-    maximalValue,
-    sliderWidth,
-    onChange,
-  });
+
+  const onPickerValueChange = useCallback(
+    async (position: number) => {
+      onChange(
+        computePickerValue(position, minimalValue, maximalValue, sliderWidth)
+      );
+    },
+    [minimalValue, maximalValue, sliderWidth, onChange]
+  );
 
   const { panGesture, pickerPosition } = useSliderPan({
     sliderWidth,
     initialValue: value,
-    onChangePickerValue,
+    onPickerValueChange,
   });
 
   const progressStyle = useAnimatedStyle(() => ({
