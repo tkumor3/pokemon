@@ -5,9 +5,17 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "pokemon",
     "userInterfaceStyle": "automatic",
     "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/images/react-logo.png",
+          "color": "#FFCE4B",
+          "defaultChannel": "default"
+        }
+      ],
       [
         "expo-location",
         {

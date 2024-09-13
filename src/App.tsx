@@ -18,12 +18,18 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Pokemon from "./Screens/Pokemon";
 import PokemonListTab from "./Screens/PokemonListTab";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { getHeaderTitle } from "./Screens/utils";
+import { getHeaderTitle, getInitialURL, subscribe } from "./Screens/utils";
 import capitalize from "lodash/capitalize";
 import StatisticsModal from "./Screens/StatisticsModal";
 import Location from "./Screens/Location";
 import { useColorScheme } from "react-native";
 import { LightTheme, DarkTheme } from "@constants/themes";
+
+import * as ExpoLinking from "expo-linking";
+
+import "@notifications/initialize";
+
+const prefix = ExpoLinking.createURL("/");
 
 const link = from([
   new RetryLink({
@@ -40,7 +46,7 @@ const link = from([
   new HttpLink({ uri: "https://beta.pokeapi.co/graphql/v1beta" }),
 ]);
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   link,
   cache: new InMemoryCache({
     typePolicies: {
@@ -66,8 +72,16 @@ function App() {
             <NoConnection />
             <NavigationContainer
               theme={scheme === "dark" ? DarkTheme : LightTheme}
+              linking={{
+                prefixes: [prefix],
+                config: {
+                  screens: { Pokemon: "pokemon/:name" },
+                },
+                getInitialURL,
+                subscribe,
+              }}
             >
-              <Stack.Navigator initialRouteName="PokemonListTab">
+              <Stack.Navigator initialRouteName="Location">
                 <Stack.Group>
                   <Stack.Screen
                     options={({ route }) => ({
