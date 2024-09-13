@@ -7,7 +7,7 @@ import { createStyleSheet, useStylesWithTheme } from "@stylesheet";
 import { View, Text } from "react-native";
 import computePickerValue from "./utils/computePickerValue";
 
-export const PICKER_SIZE = 23;
+const PICKER_SIZE = 23;
 
 type Props = {
   minimalValue: number;
@@ -23,7 +23,13 @@ const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
   const onPickerValueChange = useCallback(
     async (position: number) => {
       onChange(
-        computePickerValue(position, minimalValue, maximalValue, sliderWidth)
+        computePickerValue(
+          position,
+          minimalValue,
+          maximalValue,
+          sliderWidth,
+          PICKER_SIZE
+        )
       );
     },
     [minimalValue, maximalValue, sliderWidth, onChange]
@@ -33,6 +39,7 @@ const Slider = ({ minimalValue, maximalValue, value, onChange }: Props) => {
     sliderWidth,
     initialValue: value,
     onPickerValueChange,
+    picker_size: PICKER_SIZE,
   });
 
   const progressStyle = useAnimatedStyle(() => ({

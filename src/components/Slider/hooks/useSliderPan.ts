@@ -7,18 +7,19 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { PICKER_SIZE } from "..";
 
 type Params = {
   sliderWidth: number;
   initialValue: number;
   onPickerValueChange: (progress: number) => void;
+  picker_size: number;
 };
 
 const useSliderPan = ({
   sliderWidth,
   initialValue,
   onPickerValueChange,
+  picker_size,
 }: Params) => {
   const pickerPosition = useSharedValue(initialValue);
 
@@ -29,7 +30,7 @@ const useSliderPan = ({
         const pickerPositionValue = computePickerPosition(
           e.allTouches[0].x,
           sliderWidth,
-          PICKER_SIZE
+          picker_size
         );
 
         runOnJS(onPickerValueChange)(pickerPositionValue);
@@ -44,14 +45,14 @@ const useSliderPan = ({
           const pickerPositionValue = computePickerPosition(
             e.x,
             sliderWidth,
-            PICKER_SIZE
+            picker_size
           );
           runOnJS(onPickerValueChange)(pickerPositionValue);
 
           pickerPosition.value = pickerPositionValue;
         }
       });
-  }, [sliderWidth, pickerPosition, onPickerValueChange]);
+  }, [sliderWidth, pickerPosition, onPickerValueChange, picker_size]);
 
   return { panGesture, pickerPosition };
 };
