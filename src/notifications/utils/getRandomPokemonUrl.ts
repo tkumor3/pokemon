@@ -1,4 +1,4 @@
-import { client } from "@/src/App";
+import { client } from "@/src/client";
 import { gql } from "@apollo/client";
 import * as ExpoLinking from "expo-linking";
 
@@ -16,15 +16,18 @@ const GET_POKEMON = gql(`
 
 const prefix = ExpoLinking.createURL("/");
 
-const getRandomPokemonUrl = async () => {
+export let NEXT_POKEMON_URL: string = `${prefix}pokemon/magnemite`;
+
+const setNextRandomPokemonUrl = async () => {
   const pokemonId = getRandomInt();
   const data = await client.query({
+    fetchPolicy: "network-only",
     query: GET_POKEMON,
     variables: { id: pokemonId },
   });
 
   const name = data.data.pokemon_v2_pokemon[0].name;
-  return `${prefix}pokemon/${name}`;
+  NEXT_POKEMON_URL = `${prefix}pokemon/${name}`;
 };
 
-export default getRandomPokemonUrl;
+export default setNextRandomPokemonUrl;
