@@ -6,9 +6,7 @@ import { RootStackParamList } from "./types";
 import { LinkingOptions } from "@react-navigation/native";
 import { Linking } from "react-native";
 import * as Notifications from "expo-notifications";
-import { client } from "../App";
-import { gql } from "../__generated__";
-import * as ExpoLinking from "expo-linking";
+import getRandomPokemonUrl from "@notifications/utils/getRandomPokemonUrl";
 
 export const getHeaderTitle = (
   route: RouteProp<RootStackParamList, "PokemonListTab">
@@ -66,29 +64,4 @@ export const subscribe: SubscribeType = (listener) => {
     eventListenerSubscription.remove();
     subscription.remove();
   };
-};
-
-function getRandomInt() {
-  return Math.floor(Math.random() * 350);
-}
-
-const GET_POKEMON = gql(`
-  query pokemon_name($id: Int) {
-    pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
-      name
-    }
-  }
-`);
-
-const prefix = ExpoLinking.createURL("/");
-
-const getRandomPokemonUrl = async () => {
-  const pokemonId = getRandomInt();
-  const data = await client.query({
-    query: GET_POKEMON,
-    variables: { id: pokemonId },
-  });
-
-  const name = data.data.pokemon_v2_pokemon[0].name;
-  return `${prefix}pokemon/${name}`;
 };

@@ -7,7 +7,7 @@ const schedulePokemonOfTheDayNotification = async () => {
   const hasScheduledNotification = scheduledNotifications.some(
     (notification) => notification.content.data.type === "pokemonOfTheDay"
   );
-  console.log(scheduledNotifications);
+
   if (!hasScheduledNotification) {
     await Notifications.scheduleNotificationAsync({
       content: {
