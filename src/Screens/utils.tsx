@@ -6,9 +6,10 @@ import { RootStackParamList } from "./types";
 import { LinkingOptions } from "@react-navigation/native";
 import { Linking } from "react-native";
 import * as Notifications from "expo-notifications";
-import setNextRandomPokemonUrl, {
+import {
   NEXT_POKEMON_URL,
-} from "@notifications/utils/getRandomPokemonUrl";
+  setNextRandomPokemonUrl,
+} from "@notifications/utils/randomPokemonUrl";
 
 export const getHeaderTitle = (
   route: RouteProp<RootStackParamList, "PokemonListTab">

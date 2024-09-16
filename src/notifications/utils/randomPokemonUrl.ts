@@ -18,7 +18,7 @@ const prefix = ExpoLinking.createURL("/");
 
 export let NEXT_POKEMON_URL: string = `${prefix}pokemon/magnemite`;
 
-const setNextRandomPokemonUrl = async () => {
+export const setNextRandomPokemonUrl = async () => {
   const pokemonId = getRandomInt();
   const data = await client.query({
     fetchPolicy: "network-only",
@@ -29,5 +29,3 @@ const setNextRandomPokemonUrl = async () => {
   const name = data.data.pokemon_v2_pokemon[0].name;
   NEXT_POKEMON_URL = `${prefix}pokemon/${name}`;
 };
-
-export default setNextRandomPokemonUrl;
