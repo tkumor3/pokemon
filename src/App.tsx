@@ -2,56 +2,27 @@
 
 import { NavigationContainer } from "@react-navigation/native";
 import { RootStackParamList } from "./Screens/types";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  from,
-  HttpLink,
-} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { RetryLink } from "@apollo/client/link/retry";
 import NoConnection from "@components/NoConnection";
-import { offsetLimitPagination } from "@apollo/client/utilities";
 import { LikeContextProvider } from "./contexts/LikedContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Pokemon from "./Screens/Pokemon";
 import PokemonListTab from "./Screens/PokemonListTab";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { getHeaderTitle } from "./Screens/utils";
+import { getHeaderTitle, getInitialURL, subscribe } from "./Screens/utils";
 import capitalize from "lodash/capitalize";
 import StatisticsModal from "./Screens/StatisticsModal";
 import Location from "./Screens/Location";
 import { useColorScheme } from "react-native";
 import { LightTheme, DarkTheme } from "@constants/themes";
 
-const link = from([
-  new RetryLink({
-    delay: {
-      initial: 300,
-      max: Infinity,
-      jitter: true,
-    },
-    attempts: {
-      max: 5,
-      retryIf: (error, _operation) => !!error,
-    },
-  }),
-  new HttpLink({ uri: "https://beta.pokeapi.co/graphql/v1beta" }),
-]);
+import * as ExpoLinking from "expo-linking";
 
-const client = new ApolloClient({
-  link,
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          pokemon_v2_pokemon: offsetLimitPagination(["$ids", "$like", "$name"]),
-        },
-      },
-    },
-  }),
-});
+import "@notifications/initialize";
+import { client } from "./client";
+
+const prefix = ExpoLinking.createURL("/");
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -66,8 +37,16 @@ function App() {
             <NoConnection />
             <NavigationContainer
               theme={scheme === "dark" ? DarkTheme : LightTheme}
+              linking={{
+                prefixes: [prefix],
+                config: {
+                  screens: { Pokemon: "pokemon/:name" },
+                },
+                getInitialURL,
+                subscribe,
+              }}
             >
-              <Stack.Navigator initialRouteName="PokemonListTab">
+              <Stack.Navigator initialRouteName="Location">
                 <Stack.Group>
                   <Stack.Screen
                     options={({ route }) => ({
