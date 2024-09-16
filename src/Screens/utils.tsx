@@ -7,9 +7,9 @@ import { LinkingOptions } from "@react-navigation/native";
 import { Linking } from "react-native";
 import * as Notifications from "expo-notifications";
 import {
-  NEXT_POKEMON_URL,
-  setNextRandomPokemonUrl,
-} from "@notifications/utils/randomPokemonUrl";
+  DEFAULT_POKEMON_URL,
+  getRandomPokemonUrl,
+} from "@notifications/utils/getRandomPokemonUrl";
 
 export const getHeaderTitle = (
   route: RouteProp<RootStackParamList, "PokemonListTab">
@@ -56,8 +56,12 @@ export const subscribe: SubscribeType = (listener) => {
       const type = response.notification.request.content.data.type;
 
       if (type === "pokemonOfTheDay") {
-        listener(NEXT_POKEMON_URL);
-        setNextRandomPokemonUrl();
+        try {
+          const pokemonUrl = await getRandomPokemonUrl();
+          listener(pokemonUrl ?? DEFAULT_POKEMON_URL);
+        } catch {
+          listener(DEFAULT_POKEMON_URL);
+        }
       }
     }
   );

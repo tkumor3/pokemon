@@ -1,7 +1,6 @@
 import * as Notifications from "expo-notifications";
 import schedulePokemonOfTheDayNotification from "./triggers/schedulePokemonOfTheDayNotification";
 import registerForPushNotificationsAsync from "./utils/registerForPushNotificationsAsync";
-import { setNextRandomPokemonUrl } from "./utils/randomPokemonUrl";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -13,8 +12,9 @@ Notifications.setNotificationHandler({
 
 (async () => {
   try {
-    await setNextRandomPokemonUrl();
     await registerForPushNotificationsAsync();
     await schedulePokemonOfTheDayNotification();
-  } catch {}
+  } catch (e) {
+    console.error(e);
+  }
 })();
