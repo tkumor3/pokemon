@@ -24,6 +24,7 @@ import StatisticsModal from "./Screens/StatisticsModal";
 import Location from "./Screens/Location";
 import { useColorScheme } from "react-native";
 import { LightTheme, DarkTheme } from "@constants/themes";
+import Slider from "./Screens/Slider";
 
 const link = from([
   new RetryLink({
@@ -67,7 +68,7 @@ function App() {
             <NavigationContainer
               theme={scheme === "dark" ? DarkTheme : LightTheme}
             >
-              <Stack.Navigator initialRouteName="PokemonListTab">
+              <Stack.Navigator initialRouteName="Slider">
                 <Stack.Group>
                   <Stack.Screen
                     options={({ route }) => ({
@@ -88,6 +89,11 @@ function App() {
                     name="Location"
                     component={Location}
                     options={{ title: "Location" }}
+                  />
+                  <Stack.Screen
+                    name="Slider"
+                    component={Slider}
+                    options={{ title: "Slider" }}
                   />
                 </Stack.Group>
                 <Stack.Group screenOptions={{ presentation: "modal" }}>
